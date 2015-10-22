@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   # Example of regular route:
     get 'map_page/location/:objectId' => 'locations#guess'
+    get 'result_page/location/:objectId' => 'locations#result'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase

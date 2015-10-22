@@ -17,11 +17,8 @@ class LocationsController < ApplicationController
 			individual_location['imageLink'] = location['imageLink']
 			individual_location['objectId'] = location['objectId']
 
-
 			locations_array << individual_location
 		end
-
-		puts locations_array
 
 		@locations = locations_array
 
@@ -29,6 +26,11 @@ class LocationsController < ApplicationController
 	end
 
 	def guess
+		@objectId = params[:objectId]
+		puts @objectId
+	end
+
+	def result
 	end
 
 end

@@ -5,8 +5,7 @@
         padding: 0;
       }
       #map {
-        height: 100%;
-        position: relative;
+        height: 50%;
       }
       .back-button{
       	position: absolute; 
@@ -25,12 +24,16 @@
 </style>
 
 <script>
-
+	
 var map;
 var markers = [];
 var guessCoordinates;
 
 function initMap() {
+  var height = window.innerHeight;
+  var new_height = height / 2;
+  document.getElementById('map').style.height = new_height + 'px';
+
   var haightAshbury = {lat: 37.769, lng: -122.446};
 
   map = new google.maps.Map(document.getElementById('map'), {
@@ -67,33 +70,13 @@ function setMapOnAll(map) {
   }
 }
 
-// Removes the markers from the map, but keeps them in the array.
-function clearMarkers() {
-  setMapOnAll(null);
-}
 
 // Shows any markers currently in the array.
 function showMarkers() {
   setMapOnAll(map);
 }
 
-// Deletes all markers in the array by removing references to them.
-function deleteMarkers() {
-  clearMarkers();
-  markers = [];
-}
-
-function makeGuess(){
-  window.location.href = '/result_page/location/objectId';
-  // var height = window.innerHeight;
-  // var new_height = height / 2;
-  // document.getElementById('map').style.height = new_height + 'px';
-
-}
 
 </script>
 
-
 <div id="map"></div>
-<!-- <a href = "/"><button type="button" class="btn btn-default btn-lg back-button" href = "result_page">Back</button></a> -->
-<button id = "guessButton" type="button" class="btn btn-primary btn-lg submit-button" onclick = "makeGuess()">Submit</button>
