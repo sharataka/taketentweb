@@ -33,7 +33,7 @@ function initMap() {
   var haightAshbury = {lat: 37.769, lng: -122.446};
 
   map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 12,
+    zoom: 2,
     center: haightAshbury,
     mapTypeId: google.maps.MapTypeId.TERRAIN
   });
@@ -43,8 +43,6 @@ function initMap() {
     addMarker(event.latLng);
   });
 
-  // Adds a marker at the center of the map.
-  addMarker(haightAshbury);
 }
 
 // Adds a marker to the map and push to the array.
