@@ -1,1 +1,29 @@
-index.html.erb
+<div class = "container">
+
+	<div class = "row">
+
+	  <% @locations.each do |location| %>
+
+		<div class="col-md-4">
+			
+			<center>
+			<a href = "/map_page/location/<%= location['objectId'] %>">
+				<img src="<%= location['imageLink'] %>" alt = "Picture hint" class="img-responsive" style = "width:100%">
+			</a>
+			</center>
+
+			<a href = "">
+				<%= location['Fact'] %>
+			</a>
+
+			<hr width="50%">
+			<br><br>
+		
+		</div>
+
+
+	  <% end %>
+
+	</div>
+
+</div>
