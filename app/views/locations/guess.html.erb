@@ -29,8 +29,14 @@
 var map;
 var markers = [];
 var guessCoordinates;
+var lat;
+var lng;
 
 function initMap() {
+
+  var height = window.innerHeight;
+  document.getElementById('map').style.height = height + 'px';
+
   var haightAshbury = {lat: 37.769, lng: -122.446};
 
   map = new google.maps.Map(document.getElementById('map'), {
@@ -42,8 +48,10 @@ function initMap() {
   // This event listener will call addMarker() when the map is clicked.
   map.addListener('click', function(event) {
     addMarker(event.latLng);
-    console.log(event.latLng.lat());
-    console.log(event.latLng.lng());
+    lat = event.latLng.lat();
+    lng = event.latLng.lng()
+    // console.log(event.latLng.lat());
+    // console.log(event.latLng.lng());
 
   });
 
@@ -84,7 +92,15 @@ function deleteMarkers() {
 }
 
 function makeGuess(){
-  window.location.href = '/result_page/location/objectId';
+  if (lat == undefined) {
+    alert('Make a guess by tapping on the map!');
+  }
+  else {
+    localStorage.setItem('lat', lat);
+    localStorage.setItem('lng', lng);
+    window.location.href = '/result_page/location/objectId/';
+  }
+
   // var height = window.innerHeight;
   // var new_height = height / 2;
   // document.getElementById('map').style.height = new_height + 'px';

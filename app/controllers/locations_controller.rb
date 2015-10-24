@@ -7,11 +7,15 @@ class LocationsController < ApplicationController
 
 		# http://www.rubydoc.info/github/adelevie/parse-ruby-client/file/README.md
 
-		locations_query = Parse::Query.new("CoorList")
-		locations = locations_query.get
+		# locations_query = Parse::Query.new("CoorList")
+		# locations = locations_query.get
+
+		locations_query = Parse::Query.new("CoorList").tap do |q|
+		  q.limit = 6
+		end.get
 
 		locations_array = Array.new
-		locations.each do |location|
+		locations_query.each do |location|
 			individual_location = Hash.new
 			individual_location['Fact'] = location['Fact']
 			individual_location['imageLink'] = location['imageLink']
@@ -31,6 +35,7 @@ class LocationsController < ApplicationController
 	end
 
 	def result
+		# puts params[:objectId]
 	end
 
 end
