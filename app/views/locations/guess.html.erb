@@ -143,6 +143,15 @@ function makeGuess(){
     });
     flightPath.setMap(map);
 
+ //Calc distance between 2 points
+      var distance_number = google.maps.geometry.spherical.computeDistanceBetween(guessCoordinates, actualCoordinates) / 1000;
+      if (distance_number<501) {
+        $scope.round_status = "Correct"
+      } else {
+        $scope.round_status = "Incorrect"
+      }
+      distance = distance_number.toFixed(0);
+      alert(distance);
 
   }
 
