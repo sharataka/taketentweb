@@ -42,7 +42,7 @@ function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 3,
     center: haightAshbury,
-    mapTypeId: google.maps.MapTypeId.TERRAIN
+    mapTypeId: google.maps.MapTypeId.ROADMAP
   });
 
   // This event listener will call addMarker() when the map is clicked.
@@ -103,6 +103,7 @@ function makeGuess(){
     var height = window.innerHeight;
     var new_height = height / 2;
     document.getElementById('map').style.height = new_height + 'px';
+    google.maps.event.trigger(map, 'resize');
 
     // Define coordinate objects
     var actualCoordinates = {lat: 37.769, lng: -122.446};
@@ -143,15 +144,29 @@ function makeGuess(){
     });
     flightPath.setMap(map);
 
- //Calc distance between 2 points
-      var distance_number = google.maps.geometry.spherical.computeDistanceBetween(guessCoordinates, actualCoordinates) / 1000;
-      if (distance_number<501) {
-        $scope.round_status = "Correct"
-      } else {
-        $scope.round_status = "Incorrect"
-      }
-      distance = distance_number.toFixed(0);
-      alert(distance);
+    //Calc distance between 2 points
+    var guessCoordinatesObject = new google.maps.LatLng(lat, lng);
+    var actualCoordinatesObject = new google.maps.LatLng(actualCoordinates.lat, actualCoordinates.lng);
+    var round_status = '';
+
+    var distance_number = google.maps.geometry.spherical.computeDistanceBetween(guessCoordinatesObject, actualCoordinatesObject) / 1000;
+
+    // Determine whether answer is correct
+    if (distance_number<501) {
+      round_status = "Correct"
+    } else {
+      round_status = "Incorrect"
+    }
+
+    // Convert distance without decimals
+    distance = distance_number.toFixed(0);
+
+    //Format number with comma
+    distanceWithCommas =  distance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    // Pan map
+     map.panTo(guessCoordinatesObject);
+
 
   }
 
