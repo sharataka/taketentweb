@@ -22,6 +22,29 @@
       .navbar-default{
       	margin-bottom: 0px;
       }
+
+
+      .image { 
+         position: relative; 
+         width: 100%; /* for IE 6 */
+      }
+
+      h2 { 
+         position: absolute; 
+         top: 0px; 
+         left: 0; 
+         width: 100%; 
+      }
+
+      h2 span { 
+         color: white; 
+         font: bold 24px/45px Helvetica, Sans-Serif; 
+         letter-spacing: -1px;  
+         background: rgb(0, 0, 0); /* fallback color */
+         background: rgba(0, 0, 0, 0.7);
+         padding: 10px; 
+      }
+
 </style>
 
 <script>
@@ -179,10 +202,10 @@ function makeGuess(){
     var d1 = document.getElementById('map');
     d1.insertAdjacentHTML('afterend', '<div class = "image"><img src = "https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s640x640/sh0.08/e35/11336022_1688167831416163_947066833_n.jpg" class="img-responsive"><h2><span>'+round_status+'! '+distanceWithCommas+'km away</span></h2></div>');
 
-    // <div style = "position:relative;">
-    //   <img src = "https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s640x640/sh0.08/e35/11336022_1688167831416163_947066833_n.jpg" class="img-responsive">
-    // </div>
-    
+  // <div class = "image">
+  //   <img src = "https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s640x640/sh0.08/e35/11336022_1688167831416163_947066833_n.jpg" class="img-responsive">
+  //   <h2><span>'+round_status+'! '+distanceWithCommas+'km away</span></h2>
+  // </div>
 
 
   }
