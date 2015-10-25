@@ -167,6 +167,14 @@ function makeGuess(){
     // Pan map
      map.panTo(guessCoordinatesObject);
 
+     // Zoom map
+     if (round_status == 'Incorrect') {
+        map.setZoom(5);
+     }
+     
+     // Remove tap even listener
+     google.maps.event.clearListeners(map, 'click');
+
 
   }
 
