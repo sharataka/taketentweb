@@ -50,9 +50,6 @@ function initMap() {
     addMarker(event.latLng);
     lat = event.latLng.lat();
     lng = event.latLng.lng()
-    // console.log(event.latLng.lat());
-    // console.log(event.latLng.lng());
-
   });
 
 }
@@ -98,12 +95,31 @@ function makeGuess(){
   else {
     localStorage.setItem('lat', lat);
     localStorage.setItem('lng', lng);
-    window.location.href = '/result_page/location/objectId/';
+
+    // Go to new page
+    // window.location.href = '/result_page/location/objectId/';
+    
+    // Reduce height of map div
+    var height = window.innerHeight;
+    var new_height = height / 2;
+    document.getElementById('map').style.height = new_height + 'px';
+
+    // Add the other pin
+    var actualCoordinates = {lat: 37.769, lng: -122.446};
+    var marker = new google.maps.Marker({
+      position: actualCoordinates,
+      animation: google.maps.Animation.DROP,
+      map: map
+    });
+    markers.push(marker);
+
+    //Remove button
+    var elem = document.getElementById("guessButton");
+    elem.parentNode.removeChild(elem);
+
   }
 
-  // var height = window.innerHeight;
-  // var new_height = height / 2;
-  // document.getElementById('map').style.height = new_height + 'px';
+
 
 }
 
