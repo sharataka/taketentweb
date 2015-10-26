@@ -228,7 +228,7 @@ function makeGuess(){
 
     // Zoom map
     if (round_status == 'Incorrect') {
-      map.setZoom(4);
+      map.setZoom(3);
     }
 
     // Remove tap even listener
@@ -245,7 +245,6 @@ function makeGuess(){
     // Change width of next button
     var width = window.innerWidth;
     var scroll_bar_width = getScrollbarWidth();
-    console.log(scroll_bar_width);
     width = width - scroll_bar_width;
     document.getElementById('nextButton').style.width = (width * 0.8) + 'px';
     document.getElementById('nextButton').style.marginRight = (width * 0.1) +'px';
