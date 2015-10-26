@@ -63,7 +63,7 @@ function initMap() {
 
   // Set width of submit button
   var width = window.innerWidth;
-  var scroll_bar_width = 17;
+  var scroll_bar_width = getScrollbarWidth();
   width = width - scroll_bar_width;
   document.getElementById('guessButton').style.width = (width - 50) + 'px';
   document.getElementById("guessButton").style.right = "25px";
@@ -121,6 +121,30 @@ function deleteMarkers() {
   markers = [];
 }
 
+function getScrollbarWidth() {
+    var outer = document.createElement("div");
+    outer.style.visibility = "hidden";
+    outer.style.width = "100px";
+    outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+
+    document.body.appendChild(outer);
+
+    var widthNoScroll = outer.offsetWidth;
+    // force scrollbars
+    outer.style.overflow = "scroll";
+
+    // add innerdiv
+    var inner = document.createElement("div");
+    inner.style.width = "100%";
+    outer.appendChild(inner);        
+
+    var widthWithScroll = inner.offsetWidth;
+
+    // remove divs
+    outer.parentNode.removeChild(outer);
+
+    return widthNoScroll - widthWithScroll;
+}
 function makeGuess(){
   if (lat == undefined) {
     alert('Guess by tapping on the map!');
@@ -208,16 +232,22 @@ function makeGuess(){
     // Remove tap even listener
     google.maps.event.clearListeners(map, 'click');
 
-    //Append HTML to DOM
+    //Append image and status text to DOM
     var d1 = document.getElementById('map');
     d1.insertAdjacentHTML('afterend', '<div id = "image"><div class = "image"><img src = "https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s640x640/sh0.08/e35/11336022_1688167831416163_947066833_n.jpg" class="img-responsive"><h2><span>'+round_status+'! '+distanceWithCommas+'km away</span></h2></div></div>');
 
-    // Append next button
+    // Append next button to DOM
     d1 = document.getElementById('image');
     d1.insertAdjacentHTML('afterend', '<br><div id = "next-button"><div class = "row"><button id = "nextButton" type="button" class="btn btn-primary btn-lg next-button">Next <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button></div></div>');
+
+    // Change width of next button
+    var width = window.innerWidth;
+    var scroll_bar_width = getScrollbarWidth();
+    console.log(scroll_bar_width);
+    width = width - scroll_bar_width;
     document.getElementById('nextButton').style.width = (width - 50) + 'px';
-    document.getElementById("nextButton").style.right = "25px";
-    document.getElementById("nextButton").style.left = "25px";
+    document.getElementById('nextButton').style.right = "25px";
+    document.getElementById('nextButton').style.left = "25px";
 
 
   }
