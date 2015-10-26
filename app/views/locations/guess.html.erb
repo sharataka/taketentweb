@@ -8,16 +8,16 @@
         height: 100%;
         position: relative;
       }
-      .back-button{
-      	position: absolute; 
-   		bottom: 100px;
-   		width:30%;
-      }
+
       .submit-button{
-      position: absolute; 
-   		bottom: 100px; 
-   		width: 100%;
-   		right: 0px;
+        position: absolute; 
+     		bottom: 100px; 
+     		width: 80%;
+     		right: 0px;
+      }
+      .next-button{
+        bottom: 100px; 
+        width: 100%;
       }
       .navbar-default{
       	margin-bottom: 0px;
@@ -38,7 +38,7 @@
 
       h2 span { 
          color: white; 
-         font: bold 24px/45px Helvetica, Sans-Serif; 
+         font: 24px/45px Helvetica, Sans-Serif; 
          letter-spacing: -1px;  
          background: rgb(0, 0, 0); /* fallback color */
          background: rgba(0, 0, 0, 0.7);
@@ -57,8 +57,17 @@ var lng;
 
 function initMap() {
 
+  // Change height of map div
   var height = window.innerHeight;
   document.getElementById('map').style.height = height + 'px';
+
+  // Set width of submit button
+  var width = window.innerWidth;
+  var scroll_bar_width = 17;
+  width = width - scroll_bar_width;
+  document.getElementById('guessButton').style.width = (width - 50) + 'px';
+  document.getElementById("guessButton").style.right = "25px";
+  document.getElementById("guessButton").style.left = "25px";
 
   var haightAshbury = {lat: 37.769, lng: -122.446};
 
@@ -201,12 +210,14 @@ function makeGuess(){
 
     //Append HTML to DOM
     var d1 = document.getElementById('map');
-    d1.insertAdjacentHTML('afterend', '<div class = "image"><img src = "https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s640x640/sh0.08/e35/11336022_1688167831416163_947066833_n.jpg" class="img-responsive"><h2><span>'+round_status+'! '+distanceWithCommas+'km away</span></h2></div>');
+    d1.insertAdjacentHTML('afterend', '<div id = "image"><div class = "image"><img src = "https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s640x640/sh0.08/e35/11336022_1688167831416163_947066833_n.jpg" class="img-responsive"><h2><span>'+round_status+'! '+distanceWithCommas+'km away</span></h2></div></div>');
 
-  // <div class = "image">
-  //   <img src = "https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s640x640/sh0.08/e35/11336022_1688167831416163_947066833_n.jpg" class="img-responsive">
-  //   <h2><span>'+round_status+'! '+distanceWithCommas+'km away</span></h2>
-  // </div>
+    // Append next button
+    d1 = document.getElementById('image');
+    d1.insertAdjacentHTML('afterend', '<br><div id = "next-button"><div class = "row"><button id = "nextButton" type="button" class="btn btn-primary btn-lg next-button">Next <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button></div></div>');
+    document.getElementById('nextButton').style.width = (width - 50) + 'px';
+    document.getElementById("nextButton").style.right = "25px";
+    document.getElementById("nextButton").style.left = "25px";
 
 
   }
@@ -219,4 +230,4 @@ function makeGuess(){
 
 
 <div id="map"></div>
-<button id = "guessButton" type="button" class="btn btn-primary btn-lg submit-button" onclick = "makeGuess()">Submit</button>
+<button id = "guessButton" type="button" class="btn btn-primary btn-lg submit-button" onclick = "makeGuess()"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Guess </button>
