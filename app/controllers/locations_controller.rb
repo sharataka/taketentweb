@@ -1,4 +1,10 @@
 class LocationsController < ApplicationController
+	def signin
+	end
+
+	def signup
+	end
+
 	def index
 
 		require 'parse-ruby-client'
