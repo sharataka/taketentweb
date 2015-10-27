@@ -236,9 +236,11 @@ function makeGuess(){
     // Remove tap even listener
     google.maps.event.clearListeners(map, 'click');
 
+    // Get imageLink text to display on result experience
+    var imageLink_hidden = document.getElementById('imageLink').value;
+
     //Append image and status text to DOM
     var d1 = document.getElementById('map');
-    var imageLink_hidden = document.getElementById('imageLink').value;
     d1.insertAdjacentHTML('afterend', '<div id = "image"><div class = "image"><img src = "'+ imageLink_hidden +'" class = "img-responsive"><h2><span>'+round_status+'! '+distanceWithCommas+'km away</span></h2></div></div>');
 
     // Append next button to DOM
