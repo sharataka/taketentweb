@@ -30,8 +30,13 @@ class LocationsController < ApplicationController
 	end
 
 	def guess
-		@objectId = params[:objectId]
-		puts @objectId
+		objectId = params[:objectId]
+		location_query = Parse::Query.new("CoorList")
+		location_query.eq("objectId", objectId)
+		location_object = location_query.get
+		@lat = location_object[0]['Lat']
+		@long = location_object[0]['Long']
+		@imageLink = location_object[0]['imageLink']
 	end
 
 	def result

@@ -165,7 +165,9 @@ function makeGuess(){
     google.maps.event.trigger(map, 'resize');
 
     // Define coordinate objects
-    var actualCoordinates = {lat: 37.769, lng: -122.446};
+    var lat_hidden = document.getElementById('lat');
+    var long_hidden = document.getElementById('long');
+    var actualCoordinates = {lat: Number(lat_hidden.value), lng: Number(long_hidden.value)};
     var guessCoordinates = {lat: lat, lng:lng};
 
     // Add the other pin
@@ -236,7 +238,8 @@ function makeGuess(){
 
     //Append image and status text to DOM
     var d1 = document.getElementById('map');
-    d1.insertAdjacentHTML('afterend', '<div id = "image"><div class = "image"><img src = "https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s640x640/sh0.08/e35/11336022_1688167831416163_947066833_n.jpg" class="img-responsive"><h2><span>'+round_status+'! '+distanceWithCommas+'km away</span></h2></div></div>');
+    var imageLink_hidden = document.getElementById('imageLink').value;
+    d1.insertAdjacentHTML('afterend', '<div id = "image"><div class = "image"><img src = "'+ imageLink_hidden +'"><h2><span>'+round_status+'! '+distanceWithCommas+'km away</span></h2></div></div>');
 
     // Append next button to DOM
     d1 = document.getElementById('image');
@@ -258,6 +261,9 @@ function makeGuess(){
 
 </script>
 
+<input id = "lat" type="hidden" name="lat" value="<%= @lat %>">
+<input id = "long" type="hidden" name="long" value="<%= @long %>">
+<input id = "imageLink" type="hidden" name="imageLink" value="<%= @imageLink %>">
 
 <div id="map"></div>
 <button id = "guessButton" type="button" class="btn btn-primary btn-lg submit-button" onclick = "makeGuess()"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Guess </button>
