@@ -1,16 +1,15 @@
 class LocationsController < ApplicationController
+
+	before_action :require_login
+
 	def signin
 	end
 
 	def signup
+		
 	end
 
 	def index
-
-		require 'parse-ruby-client'
-
-		Parse.init(application_id: 'qLfYVjRm0fmRuwLjx0F0TpzPXlQmCg31ennbB0J4', api_key: 'c3fmbo6lLjiFcujfKEvo4DIk4x9LxwAB9LFeqr3r')
-
 		# http://www.rubydoc.info/github/adelevie/parse-ruby-client/file/README.md
 
 		# locations_query = Parse::Query.new("CoorList")
@@ -47,6 +46,12 @@ class LocationsController < ApplicationController
 
 	def result
 		# puts params[:objectId]
+	end
+
+	private
+	def require_login
+		require 'parse-ruby-client'
+		Parse.init(application_id: 'qLfYVjRm0fmRuwLjx0F0TpzPXlQmCg31ennbB0J4', api_key: 'c3fmbo6lLjiFcujfKEvo4DIk4x9LxwAB9LFeqr3r')
 	end
 
 end
