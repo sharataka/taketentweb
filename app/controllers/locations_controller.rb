@@ -6,17 +6,58 @@ class LocationsController < ApplicationController
 	end
 
 	def signup
-		
+	end
+
+	def signup_action
+		username = params[:username]
+		password = params[:password]
+
+
+		user = Parse::User.new({
+		  :username => username,
+		  :password => password
+		})
+
+		# User.save doesn't work!!!
+		if user.save
+			session[:userObject] = user
+
+
+			user_profile = Parse::Object.new("UserProfile")
+			user_profile["userID"] = session[:userObject]['objectId']
+			user_profile["GamesPlayed"] = 0
+			user_profile["LastPlayed"] = 0
+			user_profile["Wins"] = 0
+			user_profile["Losses"] = 0
+			user_profile.save
+
+			redirect_to locations_path
+		else
+			puts 'didnt work'
+		end
+
+	end
+
+	def logout_action
+		session.delete(:userObject)
+		redirect_to user_signup_path
 	end
 
 	def index
 		# http://www.rubydoc.info/github/adelevie/parse-ruby-client/file/README.md
+		
+		# Is the user signed in?
+		if session[:userObject]
+			@signed_in = true
+		else
+			@signed_in = false
+		end
 
-		# locations_query = Parse::Query.new("CoorList")
-		# locations = locations_query.get
-
+		# Query to get the next 
 		locations_query = Parse::Query.new("CoorList").tap do |q|
-		  q.limit = 6
+		  	q.limit = 6
+		  	q.order_by = "Order"
+  			q.order = :ascending
 		end.get
 
 		locations_array = Array.new

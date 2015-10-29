@@ -39,6 +39,12 @@
 	function signUp() {
 		var email = document.getElementById('inputEmail').value;
 		var password = document.getElementById('inputPassword').value;
+
+		window.location.href = '/user/signup/action/?username='+email+'&password='+password;
+		// var xhttp = new XMLHttpRequest();
+		// var url_string = encodeURIComponent("/signup/action/?username="+email+"&password="+password);
+		// xhttp.open("GET", url_string, true);
+		// xhttp.send();
 	}
 </script>
 

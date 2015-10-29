@@ -8,8 +8,16 @@ Rails.application.routes.draw do
   # Example of regular route:
     get 'map_page/location/:objectId' => 'locations#guess'
     get 'result_page/location/:objectId/' => 'locations#result'
+    
+    # Sign in
     get 'user/signin' => 'locations#signin'
+    
+    # Sign up
     get 'user/signup' => 'locations#signup'
+    get 'user/signup/action/' => 'locations#signup_action'
+
+    # Log out
+    get 'user/logout/action/' => 'locations#logout_action'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
