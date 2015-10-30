@@ -262,15 +262,15 @@ function makeGuess(){
     img.style.visibility = 'visible';
 
     // Get imageLink text to display on result experience
-    var imageLink_hidden = document.getElementById('imageLink').value;
+    // var imageLink_hidden = document.getElementById('imageLink').value;
 
     //Append image and status text to DOM
-    var d1 = document.getElementById('hr');
-    d1.insertAdjacentHTML('afterend', '<div class = "container"><div class = "row"><div class="col-md-6"><div id = "image"><div class = "image"><img src = "'+ imageLink_hidden +'" class = "img-responsive"><h2><span>'+round_status+'! '+distanceWithCommas+'km away</span></h2></div></div></div></div></div>');
+    // var d1 = document.getElementById('hr');
+    // d1.insertAdjacentHTML('afterend', '<div id = "image"><img src = "'+ imageLink_hidden +'" class = "img-responsive"><h2><span>'+round_status+'! '+distanceWithCommas+'km away</span></h2></div>');
 
     // Append next button to DOM
-    d1 = document.getElementById('image');
-    d1.insertAdjacentHTML('afterend', '<br><div id = "next-button"><div class = "row"><button id = "nextButton" type="button" class="btn btn-primary btn-lg next-button" onclick = "nextLocation()">Next <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button></div></div>');
+    // d1 = document.getElementById('image');
+    // d1.insertAdjacentHTML('afterend', '<br><div id = "next-button"><div class = "row"><button id = "nextButton" type="button" class="btn btn-primary btn-lg next-button" onclick = "nextLocation()">Next <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button></div></div>');
 
     // Change width of next button
     var width = window.innerWidth;
@@ -308,14 +308,18 @@ function makeGuess(){
 <!-- <div class = "container-fluid" id = "hidden_content" style = "visibility: hidden;"> -->
 	<div class = "row">
 
+		<!-- Re-show image -->
 		<div class="col-md-6">
 			<!-- <img src = "<%= @imageLink %>" id ="hidden_image" style = "visibility: hidden;" class = "img-responsive"> -->
-			<img src = "<%= @imageLink %>" id ="hidden_image" class = "img-responsive">
+			<div class = "image">
+				<img src = "<%= @imageLink %>" id ="hidden_image" class = "img-responsive">
+			</div>
 		</div>
 
+		<!-- More info -->
 		<div class="col-md-6">
 			
-			<!-- http://getbootstrap.com/components/#wells -->
+			<!-- Progress bar http://getbootstrap.com/components/#wells -->
 			<div class="progress">
 			  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">2,500 points
 			    <span class="sr-only">40% Complete (success)</span>
@@ -326,6 +330,10 @@ function makeGuess(){
 
 		<hr width="25%">
 
-
 	</div>
+
+	<button id = "nextButton" type="button" class="btn btn-primary btn-lg next-button" onclick = "nextLocation()">Next <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+
+
+
 </div>
