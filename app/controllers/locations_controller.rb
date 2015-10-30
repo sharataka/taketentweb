@@ -9,15 +9,17 @@ class LocationsController < ApplicationController
 			username = params[:username]
 			password = params[:password]
 
-			user = Parse::User.authenticate(username, password)
-
-			# User.save doesn't work if sign up is unsuccessful!!!
-			if user.save
+			begin
+				user = Parse::User.authenticate(username, password)
+				user.save
 				session[:userObject] = user
 				redirect_to locations_path
-			else
-				puts 'didnt work'
+			rescue Parse::ParseProtocolError => e
+  				status_code = e.code
+  				@error_message = e.error
+				redirect_to user_signin_path
 			end
+
 	end
 
 	def signup		
@@ -34,7 +36,8 @@ class LocationsController < ApplicationController
 		})
 
 		# User.save doesn't work if sign up is unsuccessful!!!
-		if user.save
+		begin
+			user.save
 			session[:userObject] = user
 
 			user_profile = Parse::Object.new("UserProfile")
@@ -46,9 +49,11 @@ class LocationsController < ApplicationController
 			user_profile.save
 
 			redirect_to locations_path
-		else
-			puts 'didnt work'
+		rescue Parse::ParseProtocolError => e
+			@error_message = e.error
+			redirect_to user_signup_path
 		end
+
 
 	end
 
@@ -62,11 +67,14 @@ class LocationsController < ApplicationController
 		if session[:userObject]
 			@signed_in = true
 			@current_user = session[:userObject]
+			number_of_locations_displayed = 9
 		else
 			@signed_in = false
+			number_of_locations_displayed = 6
 		end
-
-		# Query to find locations already played if signed in. If not, start from beginning.
+		
+		
+		# If the user is signed in, get their played locations
 		played_locations_array = Array.new
 		if session[:userObject]
 			played_locations_query = Parse::Query.new("Result").tap do |q|
@@ -78,9 +86,9 @@ class LocationsController < ApplicationController
 			end			
 		end
 
-		# Query to get the next location
+		# Query to get the next locations
 		locations_query = Parse::Query.new("CoorList").tap do |q|
-		  	q.limit = 9
+		  	q.limit = number_of_locations_displayed
 		  	q.order_by = "Order"
   			q.order = :ascending
   			q.eq("Status", "live")
@@ -162,8 +170,8 @@ class LocationsController < ApplicationController
 		Parse.init(application_id: 'qLfYVjRm0fmRuwLjx0F0TpzPXlQmCg31ennbB0J4', api_key: 'c3fmbo6lLjiFcujfKEvo4DIk4x9LxwAB9LFeqr3r')
 
 		require "browser"
-		puts browser.name 
-		puts browser.mobile?
+		# puts browser.name 
+		# puts browser.mobile?
 	end
 
 end
