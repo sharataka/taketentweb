@@ -1,0 +1,331 @@
+<% content_for :navigation do %>
+
+  <% if @signed_in == true %>
+        <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= @current_user['username'] %> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- <li><a href="#">Profile</a></li> -->
+                <li><a href="user/logout/action">Logout</a></li>
+              </ul>
+            </li>
+  <% else %>
+    <li><a href="/user/signin">Log in</a></li>
+  <% end %>
+
+<% end %>
+
+<style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+        position: relative;
+      }
+
+      .submit-button{
+        position: absolute; 
+     		bottom: 100px; 
+     		width: 80%;
+     		right: 0px;
+      }
+      .next-button{
+      }
+      .navbar-default{
+      	margin-bottom: 0px;
+      }
+
+
+      .image { 
+         position: relative; 
+         width: 100%; /* for IE 6 */
+      }
+
+      h2 { 
+         position: absolute; 
+         top: 0px; 
+         left: 0; 
+         width: 100%; 
+      }
+
+      h2 span { 
+         color: white; 
+         font: 24px/45px Helvetica, Sans-Serif; 
+         letter-spacing: -1px;  
+         background: rgb(0, 0, 0); /* fallback color */
+         background: rgba(0, 0, 0, 0.7);
+         padding: 10px; 
+      }
+
+</style>
+
+<script>
+
+var map;
+var markers = [];
+var guessCoordinates;
+var lat;
+var lng;
+
+function initMap() {
+
+  // Change height of map div
+  var height = window.innerHeight;
+  document.getElementById('map').style.height = height + 'px';
+
+  // Set width of submit button
+  var width = window.innerWidth;
+  var scroll_bar_width = getScrollbarWidth();
+  width = width - scroll_bar_width;
+  document.getElementById('guessButton').style.width = (width - 50) + 'px';
+  document.getElementById("guessButton").style.right = "25px";
+  document.getElementById("guessButton").style.left = "25px";
+
+  var haightAshbury = {lat: 37.769, lng: -122.446};
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 3,
+    center: haightAshbury,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    disableDefaultUI: true
+  });
+
+  // This event listener will call addMarker() when the map is clicked.
+  map.addListener('click', function(event) {
+    addMarker(event.latLng);
+    lat = event.latLng.lat();
+    lng = event.latLng.lng()
+  });
+
+}
+
+// Adds a marker to the map and push to the array.
+function addMarker(location) {
+  deleteMarkers()
+  var marker = new google.maps.Marker({
+    position: location,
+    animation: google.maps.Animation.DROP,
+    map: map
+  });
+  markers.push(marker);
+}
+
+// Sets the map on all markers in the array.
+function setMapOnAll(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+// Removes the markers from the map, but keeps them in the array.
+function clearMarkers() {
+  setMapOnAll(null);
+}
+
+// Shows any markers currently in the array.
+function showMarkers() {
+  setMapOnAll(map);
+}
+
+// Deletes all markers in the array by removing references to them.
+function deleteMarkers() {
+  clearMarkers();
+  markers = [];
+}
+
+function nextLocation(){
+  window.location.href = '/';
+}
+
+function getScrollbarWidth() {
+    var outer = document.createElement("div");
+    outer.style.visibility = "hidden";
+    outer.style.width = "100px";
+    outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+
+    document.body.appendChild(outer);
+
+    var widthNoScroll = outer.offsetWidth;
+    // force scrollbars
+    outer.style.overflow = "scroll";
+
+    // add innerdiv
+    var inner = document.createElement("div");
+    inner.style.width = "100%";
+    outer.appendChild(inner);        
+
+    var widthWithScroll = inner.offsetWidth;
+
+    // remove divs
+    outer.parentNode.removeChild(outer);
+
+    return widthNoScroll - widthWithScroll;
+}
+function makeGuess(){
+  if (lat == undefined) {
+    alert('Guess by tapping on the map!');
+  }
+  else {
+    localStorage.setItem('lat', lat);
+    localStorage.setItem('lng', lng);
+
+    // Go to new page
+    // window.location.href = '/result_page/location/objectId/';
+    
+    // Reduce height of map div
+    var height = window.innerHeight;
+    var new_height = height / 2;
+    document.getElementById('map').style.height = new_height + 'px';
+
+    // var width = window.innerWidth;
+    // var new_width = width / 2;
+    // document.getElementById('map').style.width = new_width + 'px';
+
+    google.maps.event.trigger(map, 'resize');
+
+    // Define coordinate objects
+    var objectId_hidden = document.getElementById('objectId').value;
+    var lat_hidden = document.getElementById('lat');
+    var long_hidden = document.getElementById('long');
+    var actualCoordinates = {lat: Number(lat_hidden.value), lng: Number(long_hidden.value)};
+    var guessCoordinates = {lat: lat, lng:lng};
+
+    // Add the other pin
+    var marker = new google.maps.Marker({
+      position: actualCoordinates,
+      animation: google.maps.Animation.DROP,
+      map: map
+    });
+    markers.push(marker);
+
+    //Remove button
+    var elem = document.getElementById("guessButton");
+    elem.parentNode.removeChild(elem);
+
+    // Add circle overlay to map
+      var circle = new google.maps.Circle({
+        map: map,
+        center: actualCoordinates,
+        radius: 500000,  //500km away
+        strokeColor:"#0000FF",
+        strokeOpacity:0.8,
+        strokeWeight:2,
+        fillColor:"#0000FF",
+        fillOpacity:0.4
+      });
+
+    // Add line between points
+    var flightPlanCoordinates = [guessCoordinates, actualCoordinates];
+    var flightPath = new google.maps.Polyline({
+      path: flightPlanCoordinates,
+      geodesic: true,
+      strokeColor: '#FF0000',
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+    flightPath.setMap(map);
+
+    //Calc distance between 2 points
+    var guessCoordinatesObject = new google.maps.LatLng(lat, lng);
+    var actualCoordinatesObject = new google.maps.LatLng(actualCoordinates.lat, actualCoordinates.lng);
+    var round_status = '';
+
+    var distance_number = google.maps.geometry.spherical.computeDistanceBetween(guessCoordinatesObject, actualCoordinatesObject) / 1000;
+
+    // Determine whether answer is correct
+    if (distance_number<501) {
+      round_status = "Correct"
+    } else {
+      round_status = "Incorrect"
+    }
+
+    // Convert distance without decimals
+    distance = distance_number.toFixed(0);
+
+    //Format number with comma
+    distanceWithCommas =  distance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    // Pan map
+    map.panTo(guessCoordinatesObject);
+
+    // Zoom map
+    if (round_status == 'Incorrect') {
+      map.setZoom(3);
+    }
+
+    // Remove tap even listener
+    google.maps.event.clearListeners(map, 'click');
+
+    var img = document.getElementById('hidden_content');
+    img.style.visibility = 'visible';
+
+    // Get imageLink text to display on result experience
+    var imageLink_hidden = document.getElementById('imageLink').value;
+
+    //Append image and status text to DOM
+    var d1 = document.getElementById('hr');
+    d1.insertAdjacentHTML('afterend', '<div class = "container"><div class = "row"><div class="col-md-6"><div id = "image"><div class = "image"><img src = "'+ imageLink_hidden +'" class = "img-responsive"><h2><span>'+round_status+'! '+distanceWithCommas+'km away</span></h2></div></div></div></div></div>');
+
+    // Append next button to DOM
+    d1 = document.getElementById('image');
+    d1.insertAdjacentHTML('afterend', '<br><div id = "next-button"><div class = "row"><button id = "nextButton" type="button" class="btn btn-primary btn-lg next-button" onclick = "nextLocation()">Next <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button></div></div>');
+
+    // Change width of next button
+    var width = window.innerWidth;
+    var scroll_bar_width = getScrollbarWidth();
+    width = width - scroll_bar_width;
+    document.getElementById('nextButton').style.width = (width * 0.8) + 'px';
+    document.getElementById('nextButton').style.marginRight = (width * 0.1) +'px';
+    document.getElementById('nextButton').style.marginLeft = (width * 0.1) +'px';
+
+    // Save result
+    var xhttp = new XMLHttpRequest();
+    var url_string = "/result_page/location/"+objectId_hidden+"/distance/" + distance;
+    xhttp.open("GET", url_string, true);
+    xhttp.send();
+
+  }
+
+
+
+}
+
+</script>
+
+<input id = "objectId" type="hidden" name="objectId" value="<%= @objectId %>">
+<input id = "lat" type="hidden" name="lat" value="<%= @lat %>">
+<input id = "long" type="hidden" name="long" value="<%= @long %>">
+<input id = "imageLink" type="hidden" name="imageLink" value="<%= @imageLink %>">
+
+<div id="map"></div>
+<button id = "guessButton" type="button" class="btn btn-primary btn-lg submit-button" onclick = "makeGuess()"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Guess </button>
+
+<hr width="50%" id = "hr">
+
+<div class = "container-fluid" id = "hidden_content">
+<!-- <div class = "container-fluid" id = "hidden_content" style = "visibility: hidden;"> -->
+	<div class = "row">
+
+		<div class="col-md-6">
+			<!-- <img src = "<%= @imageLink %>" id ="hidden_image" style = "visibility: hidden;" class = "img-responsive"> -->
+			<img src = "<%= @imageLink %>" id ="hidden_image" class = "img-responsive">
+		</div>
+
+		<div class="col-md-6">
+			
+			<!-- http://getbootstrap.com/components/#wells -->
+			<div class="progress">
+			  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">2,500 points
+			    <span class="sr-only">40% Complete (success)</span>
+			  </div>
+			</div>
+
+		</div>
+
+		<hr width="25%">
+
+
+	</div>
+</div>

@@ -130,6 +130,11 @@ class LocationsController < ApplicationController
 		@imageLink = location_object[0]['imageLink']
 		@objectId = objectId
 
+
+		if browser.chrome?
+			render "locations/browser_guess"
+		end
+
 	end
 
 	def result
@@ -170,8 +175,6 @@ class LocationsController < ApplicationController
 		Parse.init(application_id: 'qLfYVjRm0fmRuwLjx0F0TpzPXlQmCg31ennbB0J4', api_key: 'c3fmbo6lLjiFcujfKEvo4DIk4x9LxwAB9LFeqr3r')
 
 		require "browser"
-		# puts browser.name 
-		# puts browser.mobile?
 	end
 
 end
