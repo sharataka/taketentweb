@@ -1,3 +1,19 @@
+<% content_for :navigation do %>
+
+  <% if @signed_in == true %>
+        <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= @current_user['username'] %> <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <!-- <li><a href="#">Profile</a></li> -->
+                <li><a href="user/logout/action">Logout</a></li>
+              </ul>
+            </li>
+  <% else %>
+    <li><a href="/user/signin">Log in</a></li>
+  <% end %>
+
+<% end %>
+
 <style>
       html, body {
         height: 100%;
@@ -165,6 +181,7 @@ function makeGuess(){
     google.maps.event.trigger(map, 'resize');
 
     // Define coordinate objects
+    var objectId_hidden = document.getElementById('objectId').value;
     var lat_hidden = document.getElementById('lat');
     var long_hidden = document.getElementById('long');
     var actualCoordinates = {lat: Number(lat_hidden.value), lng: Number(long_hidden.value)};
@@ -255,6 +272,12 @@ function makeGuess(){
     document.getElementById('nextButton').style.marginRight = (width * 0.1) +'px';
     document.getElementById('nextButton').style.marginLeft = (width * 0.1) +'px';
 
+    // Save result
+    var xhttp = new XMLHttpRequest();
+    var url_string = "/result_page/location/"+objectId_hidden+"/distance/" + distance;
+    xhttp.open("GET", url_string, true);
+    xhttp.send();
+
   }
 
 
@@ -263,6 +286,7 @@ function makeGuess(){
 
 </script>
 
+<input id = "objectId" type="hidden" name="objectId" value="<%= @objectId %>">
 <input id = "lat" type="hidden" name="lat" value="<%= @lat %>">
 <input id = "long" type="hidden" name="long" value="<%= @long %>">
 <input id = "imageLink" type="hidden" name="imageLink" value="<%= @imageLink %>">

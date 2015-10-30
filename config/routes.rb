@@ -7,11 +7,12 @@ Rails.application.routes.draw do
 
   # Example of regular route:
     get 'map_page/location/:objectId' => 'locations#guess'
-    get 'result_page/location/:objectId/' => 'locations#result'
+    get 'result_page/location/:objectId/distance/:distance/' => 'locations#result'
     
     # Sign in
     get 'user/signin' => 'locations#signin'
-    
+    get 'user/signin/action/' => 'locations#signin_action'
+
     # Sign up
     get 'user/signup' => 'locations#signup'
     get 'user/signup/action/' => 'locations#signup_action'

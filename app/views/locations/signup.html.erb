@@ -17,16 +17,16 @@
          width: 100%; /* for IE 6 */
       }
 
-      h2 { 
+      h3 { 
          position: absolute; 
          top: 0px; 
          left: 0; 
          width: 100%; 
       }
 
-      h2 span { 
+      h3 span { 
          color: white; 
-         font: 24px/45px Helvetica, Sans-Serif; 
+         font: 22px/45px Helvetica, Sans-Serif; 
          letter-spacing: -1px;  
          background: rgb(0, 0, 0); /* fallback color */
          background: rgba(0, 0, 0, 0.7);
@@ -41,19 +41,16 @@
 		var password = document.getElementById('inputPassword').value;
 
 		window.location.href = '/user/signup/action/?username='+email+'&password='+password;
-		// var xhttp = new XMLHttpRequest();
-		// var url_string = encodeURIComponent("/signup/action/?username="+email+"&password="+password);
-		// xhttp.open("GET", url_string, true);
-		// xhttp.send();
+
 	}
 </script>
 
 <!-- Waterfall -->
 <div class = "image">
 	<img src = 'http://media1.giphy.com/media/o75aUTOFKclq0/giphy.gif' class = "img-responsive">
-	<h2><span>I'll show you a picture</span></h2>
-	<h2 style = "top: 50px;"><span>Guess where it is on the map</span></h2>
-	<h2 style = "top: 100px;"><span>I'll show you how close you are</span></h2>
+	<h3><span>I'll show you a picture</span></h2>
+	<h3 style = "top: 50px;"><span>Guess where it is on the map</span></h2>
+	<h3 style = "top: 100px;"><span>I'll show you how close you are</span></h2>
 </div>
 
 <!-- <img src = 'http://media.giphy.com/media/3rgXBupHMyqFNHWgMw/giphy.gif' class = "img-responsive"> -->
