@@ -160,6 +160,10 @@ class LocationsController < ApplicationController
 	def require_login
 		require 'parse-ruby-client'
 		Parse.init(application_id: 'qLfYVjRm0fmRuwLjx0F0TpzPXlQmCg31ennbB0J4', api_key: 'c3fmbo6lLjiFcujfKEvo4DIk4x9LxwAB9LFeqr3r')
+
+		require "browser"
+		puts browser.name 
+		puts browser.mobile?
 	end
 
 end
@@ -167,3 +171,4 @@ end
 # http://www.rubydoc.info/github/adelevie/parse-ruby-client/file/README.md
 # http://www.color-hex.com/color-palette/5452
 # http://getbootstrap.com/css/#forms
+# https://github.com/fnando/browser
