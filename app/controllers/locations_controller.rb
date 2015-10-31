@@ -95,6 +95,7 @@ class LocationsController < ApplicationController
   			q.value_not_in("objectId", played_locations_array)
 		end.get
 
+		# Put location objects in an array to be called by view
 		locations_array = Array.new
 		locations_query.each do |location|
 			individual_location = Hash.new
@@ -128,12 +129,13 @@ class LocationsController < ApplicationController
 		@lat = location_object[0]['Lat']
 		@long = location_object[0]['Long']
 		@imageLink = location_object[0]['imageLink']
+		@answer = location_object[0]['Answer']
 		@objectId = objectId
 
 
-		if browser.chrome?
-			render "locations/browser_guess"
-		end
+		
+		render "locations/browser_guess"
+
 
 	end
 

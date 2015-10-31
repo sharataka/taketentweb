@@ -18,6 +18,19 @@
 <!-- Body -->
 <div class = "container">
 
+	<!-- Show well if not signed in -->
+	<% if @signed_in == false %>
+		<div class="well well-sm info">
+			<center>
+				Get more pictures, save progress, and compete against friends.
+				<a href = "/user/signup">
+					Sign up here!
+				</a>
+			</center>
+		</div>
+	<% end %>
+	<!-- End of well -->
+
 	<div class = "row">
 
 	  <% @locations.each_with_index do |location, index| %>
