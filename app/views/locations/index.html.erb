@@ -15,7 +15,7 @@
               </ul>
             </li>
 	<% else %>
-		<li><a href="user/signin">Log in</a></li>
+		<li><a href="user/signup">Sign up</a></li>
 	<% end %>
 
 <% end %>
@@ -28,7 +28,7 @@
 	<% if @signed_in == false %>
 		<div class="well well-sm info">
 			<center>
-				Get more pictures, save progress, and compete against friends.
+				<span class="glyphicon glyphicon-picture" aria-hidden="true" style="color:#428bca"></span> Get more pictures, save progress, and compete against friends.
 				<a href = "/user/signup">
 					Sign up here!
 				</a>
