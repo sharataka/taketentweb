@@ -1,3 +1,9 @@
+<script>
+    FB.api('/me/permissions', function(response) {
+      console.log(response);
+  });
+      </script>
+
 <% content_for :navigation do %>
 
 	<% if @signed_in == true %>

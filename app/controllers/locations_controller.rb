@@ -2,6 +2,9 @@ class LocationsController < ApplicationController
 
 	before_action :require_login
 
+	def test
+	end
+
 	def signin
 	end
 
@@ -29,13 +32,32 @@ class LocationsController < ApplicationController
 		username = params[:username]
 		password = params[:password]
 
+		# If signing up/in via facebook
+		if password == 'facebook'
+			
+			# Change password for facebook user
+			password = 'facebookuser'
+
+			# If email exists (FB user exists), sign in
+			begin
+				user = Parse::User.authenticate(username, password)
+				user.save
+				session[:userObject] = user
+				redirect_to locations_path
+				return
+			rescue
+			end
+		end
+		# End of facebok login
+
 
 		user = Parse::User.new({
 		  :username => username,
 		  :password => password
 		})
 
-		# User.save doesn't work if sign up is unsuccessful!!!
+		
+		# Sign up the user
 		begin
 			user.save
 			session[:userObject] = user
@@ -46,12 +68,14 @@ class LocationsController < ApplicationController
 			user_profile["LastPlayed"] = 0
 			user_profile["Wins"] = 0
 			user_profile["Losses"] = 0
+			user_profile["email"] = username
 			user_profile.save
 
 			redirect_to locations_path
 		rescue Parse::ParseProtocolError => e
 			@error_message = e.error
 			redirect_to user_signup_path
+			return
 		end
 
 
@@ -132,8 +156,6 @@ class LocationsController < ApplicationController
 		@answer = location_object[0]['Answer']
 		@objectId = objectId
 
-
-		
 		render "locations/browser_guess"
 
 
