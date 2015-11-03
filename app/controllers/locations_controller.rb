@@ -83,7 +83,7 @@ class LocationsController < ApplicationController
 
 	def logout_action
 		session.delete(:userObject)
-		redirect_to user_signin_path
+		redirect_to user_signup_path
 	end
 
 	def index
