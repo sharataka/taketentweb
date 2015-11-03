@@ -1,42 +1,125 @@
 <style>
-body {
-/*    background-image: url("http://3.bp.blogspot.com/-324s3xIQf1g/VbUOnJsMD3I/AAAAAAAACqc/PmgIm_uaD_E/s1600/water-fall-2.gif");*/
+/* Space out content a bit */
+
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Custom page header */
+.header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+  padding: 14px 24px;
+  font-size: 21px;
+}
+
+.jumbotron h1 {
+  color: white;
+}
+
+.lead {
+	color: white;
+	letter-spacing: -1px;  
+	background: rgb(0, 0, 0); /* fallback color */
+	background: rgba(0, 0, 0, 0.7);
+	padding: 10px; 
+}
+
+h1 span { 
+	 color: white; 
+	 /*font: 22px/45px Helvetica, Sans-Serif; */
+	 letter-spacing: -1px;  
+	 background: rgb(0, 0, 0); /* fallback color */
+	 background: rgba(0, 0, 0, 0.7);
+	 padding: 10px; 
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+}
+.marketing p + h4 {
+  margin-top: 28px;
+}
+
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+    background-image: url(https://media.giphy.com/media/u5wjDDtUTHJeg/giphy.gif);
+  }
 }
 </style>
-
-   <!-- Custom styles for this template -->
-    <link href="https://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
 
 
 <div class="container">
 
 <!-- Waterfall -->
-<div class = "image">
+<!-- <div class = "image">
 	<img src = 'http://media1.giphy.com/media/o75aUTOFKclq0/giphy.gif' class = "img-responsive">
 	<h3><span>I'll show you a picture</span></h2>
 	<h3 style = "top: 50px;"><span>Guess where it is on the map</span></h2>
 	<h3 style = "top: 100px;"><span>I'll show you how close you are</span></h2>
-</div>
+</div> -->
 
-      
-      <div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation"><a href="#">About</a></li>
-            <li role="presentation"><a href="#">Contact</a></li>
-          </ul>
-        </nav>
-        <h3 class="text-muted">Project name</h3>
-      </div>
+     
 
       <div class="jumbotron">
-        <h1>Jumbotron heading</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
+        <h1><span>Take the Tent</span></h1>
+        <p class="lead">I'll show you a picture. Guess where it is. Find out how close you are.</p>
+        <p><a class="btn btn-lg btn-success" href="/user/signup" role="button">Sign up today</a></p>
       </div>
 
-      <div class="row marketing">
+<!--       <div class="row marketing">
         <div class="col-lg-6">
           <h4>Subheading</h4>
           <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
@@ -58,11 +141,11 @@ body {
           <h4>Subheading</h4>
           <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
         </div>
-      </div>
+      </div> -->
 
-      <footer class="footer">
-        <p>&copy; Company 2014</p>
-      </footer>
+<!--       <footer class="footer">
+        <p>Take the Tent</p>
+      </footer> -->
 
     </div> <!-- /container -->
 
