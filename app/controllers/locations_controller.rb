@@ -2,7 +2,15 @@ class LocationsController < ApplicationController
 
 	before_action :require_login
 
-	def test
+	def landing
+		# Is the user signed in?
+		if session[:userObject]
+			redirect_to locations_path
+			return
+		end
+
+		render "test"
+
 	end
 
 	def signin
