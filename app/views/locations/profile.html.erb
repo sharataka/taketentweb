@@ -1,0 +1,89 @@
+<style>
+.img-circle {
+    border-radius: 50%;
+}
+</style>
+
+<div class = "container">
+
+	<div class = "row">
+		
+		<div class = "col-md-3 col-md-offset-1">
+			<center>
+				<img src = "https://igcdn-photos-b-a.akamaihd.net/hphotos-ak-xat1/t51.2885-19/11809921_892786787476497_1939844562_a.jpg" class = "img-responsive img-circle">
+			</center>
+		</div>
+
+		<div class = "col-md-8">
+			<h1>
+				<center><%= @username %></center>
+			</h1>
+
+			<br>
+			<div class = "col-md-4">
+				<center>
+					<h2><%= @games_played %></h2>
+					<br><br><br>
+					<h5>Games played</h5>
+				</center>
+
+			</div>
+			<div class = "col-md-4">
+				<center>
+					<h2><%= @wins %></h2>
+					<br><br><br>
+					<h5>Wins</h5>
+				</center>
+
+			</div>
+
+			<div class = "col-md-4">
+				<center>
+					<h2><%= @losses %></h2>
+					<br><br><br>
+					<h5>Losses</h5>
+				</center>
+
+			</div>
+		</div>
+
+
+	</div>
+
+	<hr>
+
+	<h3><span class="glyphicon glyphicon-picture" aria-hidden="true" style= "color: #428bca;"></span> &nbsp;Results</h3>
+
+	<div class = "row" style = "margin-top: 20px;">
+
+	  <% @locations.each_with_index do |location, index| %>
+
+	  	<% if index % 3 == 0%>
+	  		<div class = "row">
+	  		</div>
+	  	<% end %>
+	  	
+		<div class="col-md-4">
+			
+			<center>
+			<a href = "/map_page/location/<%= location['objectId'] %>">
+				<img src="<%= location['imageLink'] %>" alt = "Picture hint" class="img-responsive" style = "width:100%">
+			</a>
+			</center>
+
+			<p style = "color:grey; padding-top:10px;">
+				<span class="glyphicon glyphicon-plane" aria-hidden="true" style= "color: #428bca;"></span> <%= location['Fact'] %>
+			</p>
+
+			<hr width="50%">
+			
+			<br><br>
+		
+		</div>
+
+
+	  <% end %>
+
+	</div>
+
+</div>

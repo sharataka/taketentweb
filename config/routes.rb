@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'locations#index'
+  root 'locations#landing'
 
   # Example of regular route:
     get 'map_page/location/:objectId' => 'locations#guess'
@@ -21,7 +21,9 @@ Rails.application.routes.draw do
     get 'user/logout/action/' => 'locations#logout_action'
 
     # test page
-    get 'test' => 'locations#test'    
+    get 'test' => 'locations#test'   
+
+    get 'profile'  => 'locations#profile'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
