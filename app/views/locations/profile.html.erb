@@ -1,7 +1,7 @@
 <% content_for :navigation do %>
 
 	<% if @signed_in == true %>
-	    <li class="active"><%= link_to 'My profile', profile_path %></li>
+	    <li class="active"><%= link_to @username, profile_path %></li>
         <li><%= link_to 'Logout', user_logout_action_path %></li>
 	<% else %>
 		<li><a href="user/signup">Sign up</a></li>
@@ -21,7 +21,7 @@
 		
 		<div class = "col-md-3 col-md-offset-1">
 			<center>
-				<img src = "https://igcdn-photos-b-a.akamaihd.net/hphotos-ak-xat1/t51.2885-19/11809921_892786787476497_1939844562_a.jpg" class = "img-responsive img-circle">
+				<img src = "https://s-media-cache-ak0.pinimg.com/236x/72/90/5e/72905ee63adb964c0bb7ffe8b3c5db39.jpg" class = "img-responsive img-circle">
 			</center>
 		</div>
 
