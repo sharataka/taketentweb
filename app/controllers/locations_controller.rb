@@ -2,6 +2,65 @@ class LocationsController < ApplicationController
 
 	before_action :require_login
 
+	def profile
+		
+		# Get username
+		@username = session[:userObject]['username']
+
+		# Get stats for user
+		my_profile = Parse::Query.new("UserProfile").eq("userID", session[:userObject]['objectId']).get.first
+		@wins = my_profile['Wins']
+		@losses = my_profile['Losses']
+		@games_played = my_profile['GamesPlayed']
+
+		# Is the user signed in?
+		if session[:userObject]
+			@signed_in = true
+			@current_user = session[:userObject]
+			number_of_locations_displayed = 9
+		else
+			@signed_in = false
+			number_of_locations_displayed = 6
+		end
+		
+		
+		# If the user is signed in, get their played locations
+		played_locations_array = Array.new
+		if session[:userObject]
+			played_locations_query = Parse::Query.new("Result").tap do |q|
+	  			q.eq("user", session[:userObject]['objectId'])
+			end.get
+
+			played_locations_query.each do |played_location|
+				played_locations_array << played_location['locationId']
+			end			
+		end
+
+		# Query to get the next locations
+		locations_query = Parse::Query.new("CoorList").tap do |q|
+		  	q.limit = number_of_locations_displayed
+		  	q.order_by = "Order"
+  			q.order = :ascending
+  			q.eq("Status", "live")
+  			q.value_in("objectId", played_locations_array)
+		end.get
+
+		# Put location objects in an array to be called by view
+		locations_array = Array.new
+		locations_query.each do |location|
+			individual_location = Hash.new
+			individual_location['Fact'] = location['Fact']
+			individual_location['imageLink'] = location['imageLink']
+			individual_location['objectId'] = location['objectId']
+
+			locations_array << individual_location
+		end
+
+		@locations = locations_array
+		
+	end
+
+
 	def landing
 		# Is the user signed in?
 		if session[:userObject]

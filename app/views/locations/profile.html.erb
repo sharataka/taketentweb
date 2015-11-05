@@ -1,3 +1,14 @@
+<% content_for :navigation do %>
+
+	<% if @signed_in == true %>
+	    <li class="active"><%= link_to 'My profile', profile_path %></li>
+        <li><%= link_to 'Logout', user_logout_action_path %></li>
+	<% else %>
+		<li><a href="user/signup">Sign up</a></li>
+	<% end %>
+
+<% end %>
+
 <style>
 .img-circle {
     border-radius: 50%;
