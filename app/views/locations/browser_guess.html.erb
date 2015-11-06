@@ -162,6 +162,7 @@ function getScrollbarWidth() {
     outer.parentNode.removeChild(outer);
 
     return widthNoScroll - widthWithScroll;
+
 }
 function makeGuess(){
   if (lat == undefined) {
@@ -188,7 +189,7 @@ function makeGuess(){
     // Define coordinate objects
     var objectId_hidden = document.getElementById('objectId').value;
     var answer_hidden = document.getElementById('answer').value;
-    console.log(answer_hidden);
+    var all_scores = document.getElementById('all_scores').value;
     var lat_hidden = document.getElementById('lat');
     var long_hidden = document.getElementById('long');
     var actualCoordinates = {lat: Number(lat_hidden.value), lng: Number(long_hidden.value)};
@@ -272,6 +273,35 @@ function makeGuess(){
     var answer_text = document.getElementById('updated_answer');
     answer_text.innerHTML = answer_hidden;
   
+    // CALC STATS
+
+        // Convert string of other results to array
+        all_scores = JSON.parse("[" + all_scores + "]");
+
+        // Add the current score to the array
+        all_scores.push(Number(distance));
+        
+        // Sort results in ascending order
+        all_scores.sort(function(a, b){return a-b});
+        
+        // Best guess and number of guesses
+        var best_guess = all_scores[0];
+        var number_of_guesses = all_scores.length
+        
+        // Avg guess
+        var index_of_median = number_of_guesses / 2;
+        if (number_of_guesses % 2 == 0) {
+          var avg_guess = (all_scores[index_of_median - 1] + all_scores[index_of_median] ) / 2;
+        }
+        else {
+          var avg_guess = all_scores[index_of_median - 0.5];
+        }
+
+    // END OF STATS
+
+    // Update ranking text
+    var rank_text = document.getElementById('rank');
+    rank_text.innerHTML =  '1st place out of ' + number_of_guesses;
 
     // Save result
     var xhttp = new XMLHttpRequest();
@@ -292,6 +322,7 @@ function makeGuess(){
 <input id = "lat" type="hidden" name="lat" value="<%= @lat %>">
 <input id = "long" type="hidden" name="long" value="<%= @long %>">
 <input id = "imageLink" type="hidden" name="imageLink" value="<%= @imageLink %>">
+<input id = "all_scores" type="hidden" name="all_scores" value="<%= @all_scores %>">
 
 <div id="map"></div>
 <button id = "guessButton" type="button" class="btn btn-primary btn-lg submit-button" onclick = "makeGuess()"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Guess </button>
@@ -319,6 +350,18 @@ function makeGuess(){
             </div>
         </div>
 
+
+      
+
+      <!-- Rank -->
+        <div class = "row">
+            <div>
+              <h4 id = "rank">
+                <span class="glyphicon glyphicon-user" aria-hidden="true" style = "color: #428bca"></span>&nbsp;1st place out of 7 players
+              </h4>
+            </div>
+        </div>
+
       <!-- Show well if not signed in -->
       <% if @signed_in == false %>
       <div class = "row">
@@ -330,6 +373,22 @@ function makeGuess(){
                 <a href = "/user/signup">
                   Sign up here!
                 </a>
+              </h5>
+            </center>
+          </div>
+        </div>
+      </div>
+      <% end %>
+      <!-- End of well -->
+
+      <!-- Show well if already played this location -->
+      <% if @already_played == true %>
+      <div class = "row">
+        <div class = "col-md-6 col-md-offset-3">
+          <div class="well well-sm info">
+            <center>
+              <h5>
+                <span class="glyphicon glyphicon-picture" aria-hidden="true" style = "color: #428bca"></span> You've already played this picture, so we're not saving this result.
               </h5>
             </center>
           </div>

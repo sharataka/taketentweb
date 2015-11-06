@@ -226,39 +226,52 @@ class LocationsController < ApplicationController
 		@answer = location_object[0]['Answer']
 		@objectId = objectId
 
+		# Did user play this location before?
+		game_score = Parse::Query.new("Result").eq("user", session[:userObject]['objectId']).eq("locationId", objectId).get.first
+		if game_score
+			@already_played = true
+		end
+
+		@all_scores = '1,500,400'
+
 		render "locations/browser_guess"
 
 
 	end
 
 	def result
-		
 		# Get parameters
 		objectId = params[:objectId]
 		distance = params[:distance].to_f
 
-		# Save result
-		result = Parse::Object.new("Result")
-		result["user"] = session[:userObject]['objectId']
-		result["distance"] = distance
-		result["locationId"] = objectId
-		result.save
-
-		# Get user profile
-		game_score = Parse::Query.new("UserProfile").eq("userID", session[:userObject]['objectId']).get.first
-		
-		# Update games played
-		game_score["GamesPlayed"] = Parse::Increment.new(1)
-		
-		# Update wins/losses
-		if distance < 500
-			game_score["Wins"] = Parse::Increment.new(1)
+		# Only save result if haven't played before
+		game_score = Parse::Query.new("Result").eq("user", session[:userObject]['objectId']).eq("locationId", objectId).get.first
+		if game_score
 		else
-			game_score["Losses"] = Parse::Increment.new(1)
+			
+			# Save result
+			result = Parse::Object.new("Result")
+			result["user"] = session[:userObject]['objectId']
+			result["distance"] = distance
+			result["locationId"] = objectId
+			result.save
+
+			# Get user profile
+			game_score = Parse::Query.new("UserProfile").eq("userID", session[:userObject]['objectId']).get.first
+			
+			# Update games played
+			game_score["GamesPlayed"] = Parse::Increment.new(1)
+			
+			# Update wins/losses
+			if distance < 500
+				game_score["Wins"] = Parse::Increment.new(1)
+			else
+				game_score["Losses"] = Parse::Increment.new(1)
+			end
+			
+			# Save update
+			game_score.save
 		end
-		
-		# Save update
-		game_score.save
 
 
 	end
