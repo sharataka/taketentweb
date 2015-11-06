@@ -18,7 +18,6 @@ class LocationsController < ApplicationController
 			if session[:userObject]
 				@signed_in = true
 				@current_user = session[:userObject]
-				number_of_locations_displayed = 9
 			else
 				@signed_in = false
 				number_of_locations_displayed = 6
@@ -39,7 +38,6 @@ class LocationsController < ApplicationController
 
 			# Query to get the next locations
 			locations_query = Parse::Query.new("CoorList").tap do |q|
-			  	q.limit = number_of_locations_displayed
 			  	q.order_by = "Order"
 	  			q.order = :ascending
 	  			q.eq("Status", "live")
