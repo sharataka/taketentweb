@@ -30,7 +30,7 @@
 <body>
 
     <!-- Static navbar -->
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-default navbar-static-top" style = "background-color: white; border: 0px;">
       <div class="container">
         
         <div class="navbar-header">
@@ -46,13 +46,14 @@
         <div id="navbar" class="navbar-collapse collapse">
           
           <ul class="nav navbar-nav">
-            <li class = "<%= yield :home_status %>"><a href="/">Home</a></li>
+            
             <!-- <li><a href="#about">About</a></li> -->
             <!-- <li><a href="#contact">Blog</a></li> -->
           </ul>
 
           <ul class="nav navbar-nav navbar-right">
-             <%= yield :navigation %>
+              <li class = "<%= yield :home_status %>"><a href="/">Home</a></li>
+              <%= yield :navigation %>
           </ul>
 
         </div><!--/.nav-collapse -->
