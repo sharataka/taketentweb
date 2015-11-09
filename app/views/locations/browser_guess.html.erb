@@ -279,7 +279,26 @@ function makeGuess(){
         
         // Sort results in ascending order
         all_scores.sort(function(a, b){return a-b});
-        
+
+        //Get rank/place of guess
+        var rank = all_scores.indexOf(Number(distance)) + 1;
+        function ordinal_suffix_of(i) {
+          var j = i % 10,
+              k = i % 100;
+          if (j == 1 && k != 11) {
+              return i + "st";
+          }
+          if (j == 2 && k != 12) {
+              return i + "nd";
+          }
+          if (j == 3 && k != 13) {
+              return i + "rd";
+          }
+          return i + "th";
+        }
+
+        rank = ordinal_suffix_of(rank);
+
         // Best guess and number of guesses
         var best_guess = all_scores[0];
         var number_of_guesses = all_scores.length
@@ -297,7 +316,7 @@ function makeGuess(){
 
     // Update ranking text
     var rank_text = document.getElementById('rank');
-    rank_text.innerHTML =  '1st place out of ' + number_of_guesses;
+    rank_text.innerHTML =  '<h3 style = "color: #428bca"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;' + rank + ' place</h3> out of ' + number_of_guesses + ' players';
 
     // Save result
     var xhttp = new XMLHttpRequest();
@@ -384,7 +403,7 @@ function makeGuess(){
           <div class="well well-sm info">
             <center>
               <h5>
-                <span class="glyphicon glyphicon-picture" aria-hidden="true" style = "color: #428bca"></span> You've already played this picture, so we're not saving this result.
+                <span class="glyphicon glyphicon-picture" aria-hidden="true" style = "color: #428bca"></span> You've already played this picture, so I'm not saving this result.
               </h5>
             </center>
           </div>

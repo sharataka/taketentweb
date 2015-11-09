@@ -226,16 +226,27 @@ class LocationsController < ApplicationController
 		@answer = location_object[0]['Answer']
 		@objectId = objectId
 
+		# Did user play this location before?
 		if session[:userObject]
-			# Did user play this location before?
 			game_score = Parse::Query.new("Result").eq("user", session[:userObject]['objectId']).eq("locationId", objectId).get.first
 			if game_score
 				@already_played = true
 			end
 		end
 
-		@all_scores = '1,500,400'
+		# Get list of results for people that have played this location
+		all_scores = Parse::Query.new("Result").eq("locationId", objectId).get
+		@all_scores = ''
+		if all_scores.length != 0
+			all_scores.each do |score|
+				@all_scores = @all_scores + score['distance'].to_s + ','
+				
+			end
+		end
 
+		# Remove the last ','
+		@all_scores = @all_scores[0..@all_scores.length-2]
+		
 		render "locations/browser_guess"
 
 
