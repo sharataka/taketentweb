@@ -1,15 +1,11 @@
 <% content_for :navigation do %>
 
   <% if @signed_in == true %>
-        <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= @current_user['username'] %> <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <!-- <li><a href="#">Profile</a></li> -->
-                <li><a href="user/logout/action">Logout</a></li>
-              </ul>
-            </li>
+      <!-- <li class="active"><%= link_to @username, profile_path %></li> -->
+      <li><%= link_to @current_user['username'], profile_path %></li>
+        <li><%= link_to 'Logout', user_logout_action_path %></li>
   <% else %>
-    <li><a href="/user/signin">Log in</a></li>
+    <li><%= link_to 'Sign up', user_signup_path %></li>
   <% end %>
 
 <% end %>

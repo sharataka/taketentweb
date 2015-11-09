@@ -226,10 +226,12 @@ class LocationsController < ApplicationController
 		@answer = location_object[0]['Answer']
 		@objectId = objectId
 
-		# Did user play this location before?
-		game_score = Parse::Query.new("Result").eq("user", session[:userObject]['objectId']).eq("locationId", objectId).get.first
-		if game_score
-			@already_played = true
+		if session[:userObject]
+			# Did user play this location before?
+			game_score = Parse::Query.new("Result").eq("user", session[:userObject]['objectId']).eq("locationId", objectId).get.first
+			if game_score
+				@already_played = true
+			end
 		end
 
 		@all_scores = '1,500,400'
