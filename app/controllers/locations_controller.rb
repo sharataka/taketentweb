@@ -297,6 +297,8 @@ class LocationsController < ApplicationController
 		require "browser"
 		if browser.mobile?
 			@device = 'mobile'
+		elsif browser.tablet?
+			@device = 'mobile'
 		else
 			@device = 'desktop'
 		end
