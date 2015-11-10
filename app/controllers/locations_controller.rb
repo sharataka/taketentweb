@@ -172,6 +172,7 @@ class LocationsController < ApplicationController
 		else
 			@device = 'desktop'
 		end
+		puts @device
 
 		
 		# If the user is signed in, get their played locations
