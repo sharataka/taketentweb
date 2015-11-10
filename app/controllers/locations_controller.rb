@@ -167,13 +167,6 @@ class LocationsController < ApplicationController
 			number_of_locations_displayed = 6
 		end
 		
-		if browser.mobile?
-			@device = 'mobile'
-		else
-			@device = 'desktop'
-		end
-		puts @device
-
 		
 		# If the user is signed in, get their played locations
 		played_locations_array = Array.new
@@ -302,6 +295,11 @@ class LocationsController < ApplicationController
 		Parse.init(application_id: 'qLfYVjRm0fmRuwLjx0F0TpzPXlQmCg31ennbB0J4', api_key: 'c3fmbo6lLjiFcujfKEvo4DIk4x9LxwAB9LFeqr3r')
 
 		require "browser"
+		if browser.mobile?
+			@device = 'mobile'
+		else
+			@device = 'desktop'
+		end
 	end
 
 end
