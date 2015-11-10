@@ -23,14 +23,14 @@
 
       .submit-button{
         position: absolute; 
-     		bottom: 100px; 
-     		width: 80%;
-     		right: 0px;
+        bottom: 100px; 
+        width: 80%;
+        right: 0px;
       }
       .next-button{
       }
       .navbar-default{
-      	margin-bottom: 0px;
+        margin-bottom: 0px;
       }
 
 
@@ -417,18 +417,18 @@ function makeGuess(){
 
 
 
-	<div class = "row">
+  <div class = "row">
 
-		<!-- Re-show image -->
-		<div class="col-md-12">
+    <!-- Re-show image -->
+    <div class="col-md-12">
       <center>
-  			<div class = "image">
-  				<img src = "<%= @imageLink %>" id ="hidden_image" class = "img-responsive">
-  			</div>
+        <div class = "image">
+          <img src = "<%= @imageLink %>" id ="hidden_image" class = "img-responsive">
+        </div>
       </center>
-		</div>
+    </div>
 
-	</div>
+  </div>
 
 <hr width="50%" id = "hr">
 
@@ -442,15 +442,31 @@ function makeGuess(){
   <div class = "row">
     <center>
 
-      <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-      <!-- First ad unit -->
-      <ins class="adsbygoogle"
-           style="display:inline-block;width:728px;height:90px"
-           data-ad-client="ca-pub-8276795322536005"
-           data-ad-slot="5814616558"></ins>
-      <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
+      <% if @device == 'desktop' %>
+    
+          <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- First ad unit -->
+          <ins class="adsbygoogle"
+               style="display:inline-block;width:728px;height:90px"
+               data-ad-client="ca-pub-8276795322536005"
+               data-ad-slot="5814616558"></ins>
+          <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+
+      <% else %>
+      
+          <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+          <!-- Mobile -->
+          <ins class="adsbygoogle"
+               style="display:inline-block;width:320px;height:100px"
+               data-ad-client="ca-pub-8276795322536005"
+               data-ad-slot="8209679755"></ins>
+          <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+
+      <% end %>
 
     </center>
   </div>

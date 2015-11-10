@@ -167,6 +167,12 @@ class LocationsController < ApplicationController
 			number_of_locations_displayed = 6
 		end
 		
+		if browser.mobile?
+			@device = 'mobile'
+		else
+			@device = 'desktop'
+		end
+
 		
 		# If the user is signed in, get their played locations
 		played_locations_array = Array.new
