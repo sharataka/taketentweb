@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get 'map_page/location/:objectId' => 'locations#guess'
     get 'result_page/location/:objectId/distance/:distance/' => 'locations#result'
     
+    get 'location/:objectId' => 'locations#standalone'
     # Sign in
     get 'user/signin' => 'locations#signin'
     get 'user/signin/action/' => 'locations#signin_action'

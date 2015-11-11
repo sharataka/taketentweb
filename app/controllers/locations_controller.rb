@@ -2,6 +2,24 @@ class LocationsController < ApplicationController
 
 	before_action :require_login
 
+	def standalone
+		# Is the user signed in?
+		if session[:userObject]
+			@signed_in = true
+			@current_user = session[:userObject]
+			number_of_locations_displayed = 9
+		else
+			@signed_in = false
+			number_of_locations_displayed = 6
+		end
+
+		@objectId = params[:objectId]
+		current_location = Parse::Query.new("CoorList").eq("objectId", @objectId).get.first
+		@imageLink = current_location['imageLink']
+		@fact = current_location['Fact']
+
+	end
+
 	def profile
 		
 		if session[:userObject]
