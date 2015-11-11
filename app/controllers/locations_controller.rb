@@ -56,6 +56,7 @@ class LocationsController < ApplicationController
 			end
 
 			@locations = locations_array
+			@locations = @locations.reverse
 		else
 			redirect_to root_path
 			return
@@ -63,6 +64,17 @@ class LocationsController < ApplicationController
 		
 	end
 
+	def about
+		# Is the user signed in?
+		if session[:userObject]
+			@signed_in = true
+			@current_user = session[:userObject]
+			number_of_locations_displayed = 9
+		else
+			@signed_in = false
+			number_of_locations_displayed = 6
+		end
+	end
 
 	def landing
 		# Is the user signed in?

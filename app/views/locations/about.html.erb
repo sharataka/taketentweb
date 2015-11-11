@@ -1,0 +1,35 @@
+<% content_for :about_status do %>
+	active
+<% end %>
+
+<% content_for :navigation do %>
+
+	<% if @signed_in == true %>
+	    <!-- <li class="active"><%= link_to @username, profile_path %></li> -->
+	    <li><%= link_to @current_user['username'], profile_path %></li>
+        <li><%= link_to 'Logout', user_logout_action_path %></li>
+	<% else %>
+		<li><%= link_to 'Sign up', user_signup_path %></li>
+	<% end %>
+
+<% end %>
+
+<div class = "container">
+	<div class = "row">
+
+		<h3>Why is it called Take the Tent?</h3>
+		<p>When my friends and I camp each year, one of us is responsible for taking the tent down each day. I thought it was a cool phrase.
+
+		<h3>I have feedback and/or questions.</h3>
+		<p>Great! Email me at sharataka@gmail.com.
+
+		<h3>Can I include my pictures in the game?</h3>
+		<p>Yes! Email me at sharataka@gmail.com.
+
+	</div>
+
+	<!-- Google footer ad -->
+	<%= render 'footeradtemplate' %>
+
+</div>
+
