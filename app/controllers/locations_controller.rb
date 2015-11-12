@@ -148,7 +148,7 @@ class LocationsController < ApplicationController
 			rescue
 			end
 		end
-		# End of facebok login
+		# End of facebok login if user already has FB account
 
 
 		user = Parse::User.new({
@@ -165,10 +165,14 @@ class LocationsController < ApplicationController
 			user_profile = Parse::Object.new("UserProfile")
 			user_profile["userID"] = session[:userObject]['objectId']
 			user_profile["GamesPlayed"] = 0
-			user_profile["LastPlayed"] = 0
 			user_profile["Wins"] = 0
 			user_profile["Losses"] = 0
 			user_profile["email"] = username
+			if password == 'facebookuser'
+				user_profile["signup_method"] = 'facebook'
+			else
+				user_profile["signup_method"] = 'email'
+			end
 			user_profile.save
 
 			redirect_to locations_path
