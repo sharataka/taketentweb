@@ -131,10 +131,6 @@ function deleteMarkers() {
   markers = [];
 }
 
-function nextLocation(){
-  window.location.href = '/';
-}
-
 function getScrollbarWidth() {
     var outer = document.createElement("div");
     outer.style.visibility = "hidden";
@@ -439,7 +435,18 @@ function makeGuess(){
 
 <div class = "row" style = "margin-bottom: 20px;">
   <center>
-    <button id = "nextButton" type="button" class="btn btn-primary btn-lg next-button" onclick = "nextLocation()">Next picture <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></button>
+    
+    <% if @signed_in == false %>
+      <a href = "/user/signup" class="btn btn-success btn-lg next-button">
+        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Sign up to save progress
+      </a>
+      <br><br>
+    <% end %>
+
+    <a href = "/locations" class="btn btn-primary btn-lg next-button">
+      Next picture <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    </a>
+
   </center>
 </div>
 
