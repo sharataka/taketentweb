@@ -101,7 +101,7 @@ class LocationsController < ApplicationController
 			return
 		end
 
-		render "test"
+		# render "test"
 
 	end
 
