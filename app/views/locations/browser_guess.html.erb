@@ -191,13 +191,23 @@ function makeGuess(){
     var actualCoordinates = {lat: Number(lat_hidden.value), lng: Number(long_hidden.value)};
     var guessCoordinates = {lat: lat, lng:lng};
 
-    // Add the other pin
+    // Add the actual location marker
     var marker = new google.maps.Marker({
       position: actualCoordinates,
       animation: google.maps.Animation.DROP,
       map: map
     });
     markers.push(marker);
+
+    // Add competitor's location marker
+    var compCoordinates = {lat: 52.5167, lng: 13.3833};
+    var comp_marker = new google.maps.Marker({
+      position: compCoordinates,
+      icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+      animation: google.maps.Animation.DROP,
+      map: map
+    });
+    markers.push(comp_marker);
 
     //Remove button
     var elem = document.getElementById("guessButton");
@@ -215,12 +225,23 @@ function makeGuess(){
         fillOpacity:0.4
       });
 
-    // Add line between points
+    // Add line between my guess and actual coordinates
     var flightPlanCoordinates = [guessCoordinates, actualCoordinates];
     var flightPath = new google.maps.Polyline({
       path: flightPlanCoordinates,
       geodesic: false,
       strokeColor: '#FF0000',
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+    flightPath.setMap(map);
+
+    // Add line between my competitor's and actual coordinates
+    var flightPlanCoordinates = [compCoordinates, actualCoordinates];
+    var flightPath = new google.maps.Polyline({
+      path: flightPlanCoordinates,
+      geodesic: false,
+      strokeColor: 'green',
       strokeOpacity: 1.0,
       strokeWeight: 2
     });
