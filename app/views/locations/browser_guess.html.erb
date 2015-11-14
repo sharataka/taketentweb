@@ -59,6 +59,12 @@
 
 <script>
 
+window.onload = setTimeout(showToast, 8000);
+
+function showToast() {
+  toastr.info('Sharat just guessed!');
+}
+
 var map;
 var markers = [];
 var guessCoordinates;
@@ -194,6 +200,7 @@ function makeGuess(){
     // Add the actual location marker
     var marker = new google.maps.Marker({
       position: actualCoordinates,
+      icon: 'http://maps.google.com/mapfiles/ms/icons/purple-dot.png',
       animation: google.maps.Animation.DROP,
       map: map
     });
