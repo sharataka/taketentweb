@@ -10,7 +10,10 @@ var pizzaCookingTime = 3;
 
 pizzaTimer.start(pizzaCookingTime).on('end', function () {
   // alert('Pizza is ready, bon appetit!');
-  $('#myModal').modal({ show: false});
+  $('#myModal').modal({ 
+  	show: false,
+  	backdrop: 'static'
+  });
   $('#myModal').modal('show');
 });
 
