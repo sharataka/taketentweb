@@ -4,13 +4,14 @@
 console.log('test');
 
 var pizzaTimer = new Timer({
-	tick    : 1,
-	ontick  : function(sec) { console.log(sec + ' seconds left') }
+	tick    : 1
 });
-var pizzaCookingTime = 4;
+var pizzaCookingTime = 3;
 
 pizzaTimer.start(pizzaCookingTime).on('end', function () {
-  alert('Pizza is ready, bon appetit!');
+  // alert('Pizza is ready, bon appetit!');
+  $('#myModal').modal({ show: false});
+  $('#myModal').modal('show');
 });
 
 </script>
@@ -35,16 +36,14 @@ pizzaTimer.start(pizzaCookingTime).on('end', function () {
 	
 	<div class = "row">
 		<center>
-			
+			<div class="col-md-6 col-md-offset-3">
 			<h3 style = "color:#428bca;">We're finding someone for you to play!</h3>
-
+			<br><br><br>
 			<!-- Spinner.css -->
 			<div class="wobblebar-loader"></div>
-
+		</div>
 		</center>
 	</div>
-	<a href = "/map_page/location/<%= @locationId %>">Go to the next location</a>
-
 
 </div>
 
@@ -54,3 +53,32 @@ pizzaTimer.start(pizzaCookingTime).on('end', function () {
 
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      
+      <!-- Header -->
+      <div class="modal-header">
+        <center>
+        	<h4 class="modal-title" id="myModalLabel">You're playing Sharat!</h4>
+        </center>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body">
+      		<center>
+      			You'll play <strong>3</strong> rounds. Guess closer for 2 or more of those rounds to win!
+      		</center>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <center>
+        	<a href = "/map_page/location/<%= @locationId %>" class="btn btn-success">Get started!</a>
+        </center>
+      </div>
+
+    </div>
+  </div>
+</div>
