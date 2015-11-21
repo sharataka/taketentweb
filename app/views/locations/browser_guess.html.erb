@@ -309,7 +309,7 @@ function makeGuess(){
 
     // Update result of round text
     var result_text = document.getElementById('result_text');
-    result_text.innerHTML = round_status +'! ' + distanceWithCommas+'km away';
+    result_text.innerHTML = who_won +' ' + distanceWithCommas+'km away';
 
     // Update round answer text
     var answer_text = document.getElementById('updated_answer');
@@ -424,7 +424,7 @@ function makeGuess(){
         </div>
 
       <!-- Show well if not signed in -->
-      <% if @signed_in == false %>
+<!--       <% if @signed_in == false %>
       <div class = "row">
         <div class = "col-md-6 col-md-offset-3">
           <div class="well well-sm info">
@@ -439,7 +439,7 @@ function makeGuess(){
           </div>
         </div>
       </div>
-      <% end %>
+      <% end %> -->
       <!-- End of well -->
 
       <!-- Show well if already played this location -->
@@ -472,9 +472,12 @@ function makeGuess(){
           <img src = "<%= @imageLink %>" id ="hidden_image" class = "img-responsive">
         </div>
 
-      <p style = "color:grey; padding-top:10px;">
+<!-- Share this picture text
+
+       <p style = "color:grey; padding-top:10px;">
         <span class="glyphicon glyphicon-plane" aria-hidden="true" style= "color: #428bca;"></span> See how your friends do! Share <a href = "/location/<%= @objectId %>">takethetent.com/location/<%= @objectId %></a>
       </p>
+-->
 
       </center>
     </div>
@@ -485,13 +488,15 @@ function makeGuess(){
 
 <div class = "row" style = "margin-bottom: 20px;">
   <center>
-    
+
+<!-- Sign up to save progress button    
     <% if @signed_in == false %>
       <a href = "/user/signup" class="btn btn-success btn-lg next-button">
         <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Sign up to save progress
       </a>
       <br><br>
     <% end %>
+-->
 
     <a href = "/locations" class="btn btn-primary btn-lg next-button">
       Next picture <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
