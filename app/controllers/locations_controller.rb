@@ -295,6 +295,15 @@ class LocationsController < ApplicationController
 		objectId = params[:objectId]
 		distance = params[:distance].to_f
 
+		# Is the user signed in?
+		if session[:userObject]
+			@signed_in = true
+			@current_user = session[:userObject]
+		else
+			@signed_in = false
+			return
+		end
+
 		# Only save result if haven't played before
 		game_score = Parse::Query.new("Result").eq("user", session[:userObject]['objectId']).eq("locationId", objectId).get.first
 		if game_score

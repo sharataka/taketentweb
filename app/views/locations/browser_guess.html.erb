@@ -79,6 +79,11 @@ var guessCoordinates;
 var lat;
 var lng;
 
+function scrollNextImage(){
+  console.log('test');
+  document.getElementById('next_image').scrollIntoView();
+}
+
 function initMap() {
 
   // Change height of map div
@@ -362,7 +367,7 @@ function makeGuess(){
 
     // Update ranking text
     var rank_text = document.getElementById('rank');
-    rank_text.innerHTML =  '<h3 style = "color: #428bca"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;' + rank + ' place</h3> out of ' + number_of_guesses + ' players';
+    rank_text.innerHTML =  '<span style = "color: #428bca"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;' + rank + ' place</span><span> out of ' + number_of_guesses + ' players</span>';
 
     // Save result
     var xhttp = new XMLHttpRequest();
@@ -422,6 +427,10 @@ function makeGuess(){
               </h4>
             </div>
         </div>
+
+      <a onclick = "scrollNextImage()" class="btn btn-primary btn-lg next-button">
+        Next picture <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+      </a>
 
       <!-- Show well if not signed in -->
 <!--       <% if @signed_in == false %>
@@ -498,12 +507,35 @@ function makeGuess(){
     <% end %>
 -->
 
-    <a href = "/locations" class="btn btn-primary btn-lg next-button">
-      Next picture <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    </a>
+      <a onclick = "scrollNextImage()" class="btn btn-primary btn-lg next-button">
+        Next picture <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+      </a>
+
     <br><br>
   </center>
 </div>
+
+<!-- Next picture -->
+<div class = "row" id = "next_image">
+
+  <div class="col-md-12">
+
+    <center>
+      <h3>Round 2/3</h3>
+      <div class = "image">
+        <img src = "<%= @imageLink %>" id ="hidden_image" class = "img-responsive">
+      </div>
+
+      <p style = "color:grey; padding-top:10px;">
+        <span class="glyphicon glyphicon-plane" aria-hidden="true" style= "color: #428bca;"></span> This is the fact about the next location.
+      </p>
+    </center>
+
+  </div>
+
+</div>
+
+<hr width="50%">
 
 <!-- Google footer ad -->
 <%= render 'footeradtemplate' %>
