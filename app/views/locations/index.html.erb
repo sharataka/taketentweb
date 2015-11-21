@@ -1,3 +1,8 @@
+<!-- Title tag -->
+<% content_for :title do %>
+  Tap to guess - 
+<% end %>
+
 <% content_for :home_status do %>
 	active
 <% end %>
@@ -50,8 +55,8 @@
 		<div class="col-md-4">
 			
 			<center>
-			<a href = "/map_page/location/<%= location['objectId'] %>">
-				<img src="<%= location['imageLink'] %>" alt = "Picture hint" class="img-responsive" style = "width:100%">
+			<a href = "/find-opponent/location/<%= location['objectId'] %>">
+				<img src="<%= location['imageLink'] %>" alt = "<%= location['Fact'] %>" class="img-responsive" style = "width:100%">
 			</a>
 			</center>
 

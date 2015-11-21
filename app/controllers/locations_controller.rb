@@ -2,6 +2,10 @@ class LocationsController < ApplicationController
 
 	before_action :require_login
 
+	def find_opponent
+		@locationId = params[:objectId]
+	end
+
 	def standalone
 		# Is the user signed in?
 		if session[:userObject]
