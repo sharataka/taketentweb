@@ -38,13 +38,14 @@
 
 	<!-- Tap to guess text -->
 	<center style = "margin-bottom: 50px;">
-		<h3 style = "color:grey;"><span class="glyphicon glyphicon-map-marker" aria-hidden="true" style= "color: #428bca;"></span> &nbsp;Tap to Guess</h3>
-		<h3 style = "color:grey;"><small><i class="fa fa-refresh" style= "color: #428bca;"></i> Answer the pictures below to get more</small></h3>
+			<a class="btn btn-success btn-lg" href="/find-opponent/location/<%= 
+			@locations[0]['objectId'] %>">
+				Start playing! &raquo;
+			</a>
 	</center>
 
 	<!-- Pictures -->
 	<div class = "row">
-
 	  <% @locations.each_with_index do |location, index| %>
 
 	  	<% if index % 3 == 0%>
@@ -55,9 +56,7 @@
 		<div class="col-md-4">
 			
 			<center>
-			<a href = "/find-opponent/location/<%= location['objectId'] %>">
 				<img src="<%= location['imageLink'] %>" alt = "<%= location['Fact'] %>" class="img-responsive" style = "width:100%">
-			</a>
 			</center>
 
 			<p style = "color:grey; padding-top:10px;">
@@ -69,6 +68,7 @@
 			<br><br>
 		
 		</div>
+
 
 
 	  <% end %>
