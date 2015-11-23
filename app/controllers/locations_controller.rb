@@ -257,7 +257,6 @@ class LocationsController < ApplicationController
 		location_query = Parse::Query.new("CoorList")
 		location_query.eq("objectId", objectId)
 		location_object = location_query.get
-		puts location_object
 		
 		# Pass data to view in hidden field
 		@lat = location_object[0]['Lat']
@@ -265,23 +264,35 @@ class LocationsController < ApplicationController
 		@imageLink = location_object[0]['imageLink']
 		@answer = location_object[0]['Answer']
 		@objectId = objectId
+		@current_picture_level = location_object[0]['Level']
+		current_picture_order = location_object[0]['Order']
 
 		# Get next location
 		next_location_query = Parse::Query.new("CoorList").tap do |q|
-		  	q.greater_than("Order", location_object[0]['Order'])
-		  	q.limit = 1
+		  	q.eq("Level", @current_picture_level)
 		  	q.order_by = "Order"
   			q.order = :ascending
   			q.eq("Status", "live")
 		end.get
 
-		current_picture_round = location_object[0]['Round']
-		next_picture_round = next_location_query[0]['Round']
-		if current_picture_round == next_picture_round
-			@next_location = next_location_query[0]
-		else
-			@next_location = "Round is finished"
+		#Number of rounds in level
+		@number_of_rounds_in_level = next_location_query.count
+		
+		# Continue getting next location
+		i = 0
+		next_location_query.each do |find_next_location|
+			i = i + 1
+			if current_picture_order >= find_next_location['Order']
+				@current_round = i
+			end
 		end
+
+		if @current_round == @number_of_rounds_in_level
+			@next_location = "Round is finished"
+		else
+			@next_location = next_location_query[@current_round + 1]
+		end
+
 
 
 		# Did user play this location before?

@@ -543,7 +543,7 @@ function makeGuess(){
 
       <div class="col-md-12">
         <center>
-          <h3>Round 2/3</h3>
+          <h3>Round <%= @current_round + 1 %>/<%= @number_of_rounds_in_level %></h3>
           <div class = "image">
             <img src = "<%= @next_location['imageLink'] %>" id ="hidden_image" class = "img-responsive">
           </div>
