@@ -4,6 +4,7 @@ class LocationsController < ApplicationController
 
 	def find_opponent
 		@locationId = params[:objectId]
+		@current_location = Parse::Query.new("CoorList").eq("objectId", @locationId).get.first
 	end
 
 	def standalone
@@ -256,6 +257,7 @@ class LocationsController < ApplicationController
 		location_query = Parse::Query.new("CoorList")
 		location_query.eq("objectId", objectId)
 		location_object = location_query.get
+		puts location_object
 		
 		# Pass data to view in hidden field
 		@lat = location_object[0]['Lat']
@@ -263,6 +265,24 @@ class LocationsController < ApplicationController
 		@imageLink = location_object[0]['imageLink']
 		@answer = location_object[0]['Answer']
 		@objectId = objectId
+
+		# Get next location
+		next_location_query = Parse::Query.new("CoorList").tap do |q|
+		  	q.greater_than("Order", location_object[0]['Order'])
+		  	q.limit = 1
+		  	q.order_by = "Order"
+  			q.order = :ascending
+  			q.eq("Status", "live")
+		end.get
+
+		current_picture_round = location_object[0]['Round']
+		next_picture_round = next_location_query[0]['Round']
+		if current_picture_round == next_picture_round
+			@next_location = next_location_query[0]
+		else
+			@next_location = "Round is finished"
+		end
+
 
 		# Did user play this location before?
 		if session[:userObject]
@@ -285,6 +305,7 @@ class LocationsController < ApplicationController
 		# Remove the last ','
 		@all_scores = @all_scores[0..@all_scores.length-2]
 		
+
 		render "locations/browser_guess"
 
 

@@ -529,20 +529,55 @@ function makeGuess(){
 <!-- Next picture -->
 <div class = "row" id = "next_image">
 
-  <div class="col-md-12">
+  
+    <!-- Round is finished -->
+    <% if @next_location == "Round is finished" %>
+      
+      <div class="col-md-12">
+        <center>
+            <h3>You've played all 3 rounds!</h3>
 
-    <center>
-      <h3>Round 2/3</h3>
-      <div class = "image">
-        <img src = "<%= @imageLink %>" id ="hidden_image" class = "img-responsive">
+            <!-- Tap to guess text -->
+            <div class = "row" style = "margin-top:30px;">
+              <center>
+                <a class="btn btn-success btn-lg" href="#">
+                  See how you did &raquo;
+                </a>
+              </center>
+            </div>
+
+        </center>      
       </div>
 
-      <p style = "color:grey; padding-top:10px;">
-        <span class="glyphicon glyphicon-plane" aria-hidden="true" style= "color: #428bca;"></span> This is the fact about the next location.
-      </p>
-    </center>
+   <!-- Round isn't finished -->
+    <% else %>
 
-  </div>
+      <div class="col-md-12">
+        <center>
+          <h3>Round 2/3</h3>
+          <div class = "image">
+            <img src = "<%= @next_location['imageLink'] %>" id ="hidden_image" class = "img-responsive">
+          </div>
+
+          <p style = "color:grey; padding-top:10px;">
+            <span class="glyphicon glyphicon-plane" aria-hidden="true" style= "color: #428bca;"></span> This is the fact about the next location.
+          </p>
+        </center>
+
+        <!-- Tap to guess text -->
+          <div class = "row" style = "margin-top:30px;">
+            <center>
+              <a class="btn btn-success btn-lg" href="/map_page/location/<%= @next_location['objectId'] %>">
+                Guess &raquo;
+              </a>
+            </center>
+          </div>
+
+      </div>
+
+    <% end %>
+
+
 
 </div>
 
