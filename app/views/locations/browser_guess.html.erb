@@ -67,6 +67,12 @@
 
 <script>
 
+$(document).ready(function(){
+
+
+
+});
+
 window.onload = setTimeout(showToast, 5000);
 
 function showToast() {
@@ -80,8 +86,17 @@ var lat;
 var lng;
 
 function scrollNextImage(){
-  console.log('test');
-  document.getElementById('next_image').scrollIntoView();
+    
+    var scrollToElement = function(el, ms){
+        var speed = (ms) ? ms : 600;
+        $('html,body').animate({
+            scrollTop: $(el).offset().top
+        }, speed);
+    }
+
+    // specify id of element and optional scroll speed as arguments
+    scrollToElement('#next_image', 600);
+
 }
 
 function initMap() {
@@ -374,6 +389,7 @@ function makeGuess(){
     var url_string = "/result_page/location/"+objectId_hidden+"/distance/" + distance;
     xhttp.open("GET", url_string, true);
     xhttp.send();
+
 
   }
 
