@@ -203,7 +203,7 @@ class LocationsController < ApplicationController
 			number_of_locations_displayed = 9
 		else
 			@signed_in = false
-			number_of_locations_displayed = 6
+			number_of_locations_displayed = 9
 		end
 		
 		
