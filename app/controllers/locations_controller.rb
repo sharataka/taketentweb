@@ -290,7 +290,7 @@ class LocationsController < ApplicationController
 		if @current_round == @number_of_rounds_in_level
 			@next_location = "Round is finished"
 		else
-			@next_location = next_location_query[@current_round + 1]
+			@next_location = next_location_query[@current_round]
 		end
 
 
@@ -365,6 +365,38 @@ class LocationsController < ApplicationController
 			game_score.save
 		end
 
+
+	end
+
+	def result_level
+		# Is the user signed in?
+		if session[:userObject]
+			@signed_in = true
+			@current_user = session[:userObject]
+		else
+			@signed_in = false
+		end
+
+		# Query to get the next locations
+		locations_query = Parse::Query.new("CoorList").tap do |q|
+		  	q.limit = 3
+		  	q.order_by = "Order"
+  			q.order = :ascending
+  			q.eq("Status", "live")
+		end.get
+
+		# Put location objects in an array to be called by view
+		locations_array = Array.new
+		locations_query.each do |location|
+			individual_location = Hash.new
+			individual_location['Answer'] = location['Answer']
+			individual_location['imageLink'] = location['imageLink']
+			individual_location['objectId'] = location['objectId']
+
+			locations_array << individual_location
+		end
+
+		@locations = locations_array
 
 	end
 

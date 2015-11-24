@@ -218,6 +218,7 @@ function makeGuess(){
     var all_scores = document.getElementById('all_scores').value;
     var lat_hidden = document.getElementById('lat');
     var long_hidden = document.getElementById('long');
+    var current_round = Number(document.getElementById('current_round').value);
     var actualCoordinates = {lat: Number(lat_hidden.value), lng: Number(long_hidden.value)};
     var guessCoordinates = {lat: lat, lng:lng};
 
@@ -291,8 +292,10 @@ function makeGuess(){
     // Who won?
     if (distance_number < comp_distance_number) {
       who_won = 'You won!';
+      won = true;
     } else {
       who_won = 'You lost!';
+      won = false;
     }
 
     // Convert distance without decimals
@@ -379,6 +382,27 @@ function makeGuess(){
     xhttp.open("GET", url_string, true);
     xhttp.send();
 
+    // Save results to localstorage
+    var results = { 'objectId': objectId_hidden, 'distance': distance, 'won': won };
+    if (current_round == 1){
+      var array_of_results = [];
+      array_of_results.push(results);
+      localStorage.setItem('localstorage_results', JSON.stringify(array_of_results));
+    }
+    else {
+      var retrievedObject = localStorage.getItem('localstorage_results');
+      array_of_results = JSON.parse(retrievedObject);
+
+      if ( current_round >= array_of_results.length) {
+
+      }
+      else {
+        array_of_results.push(results);
+        localStorage.setItem('localstorage_results', JSON.stringify(array_of_results));
+      }
+
+      
+    }
 
   }
 
@@ -394,6 +418,7 @@ function makeGuess(){
 <input id = "long" type="hidden" name="long" value="<%= @long %>">
 <input id = "imageLink" type="hidden" name="imageLink" value="<%= @imageLink %>">
 <input id = "all_scores" type="hidden" name="all_scores" value="<%= @all_scores %>">
+<input id = "current_round" type="hidden" name="current_round" value="<%= @current_round %>">
 
 <div id="map"></div>
 <button id = "guessButton" type="button" class="btn btn-primary btn-lg submit-button" onclick = "makeGuess()"><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> Guess </button>
@@ -529,7 +554,7 @@ function makeGuess(){
             <!-- Tap to guess text -->
             <div class = "row" style = "margin-top:30px;">
               <center>
-                <a class="btn btn-success btn-lg" href="#">
+                <a class="btn btn-success btn-lg" href="/result_level">
                   See how you did &raquo;
                 </a>
               </center>

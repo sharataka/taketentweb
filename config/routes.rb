@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # Example of regular route:
     get 'map_page/location/:objectId' => 'locations#guess'
     get 'result_page/location/:objectId/distance/:distance/' => 'locations#result'
+    get 'result_level/' => 'locations#result_level'
 
     get 'find-opponent/location/:objectId' => 'locations#find_opponent'
     
