@@ -377,12 +377,55 @@ class LocationsController < ApplicationController
 			@signed_in = false
 		end
 
-		# Query to get the next locations
+		# 1st answer
+		objectId0 = params[:objectId0]
+		distance0 = params[:distance0]
+		won0 = params[:won0]
+
+		# 2nd answer
+		objectId1 = params[:objectId1]
+		distance1 = params[:distance1]
+		won1 = params[:won1]
+
+		# 3rd answer
+		objectId2 = params[:objectId2]
+		distance2 = params[:distance2]
+		won2 = params[:won2]
+
+		# Insert objectIds into array
+		played_location = Array.new
+		played_location << objectId0
+		played_location << objectId1
+		played_location << objectId2
+
+		# Insert who_won into array to figure out who won the level
+		who_won = Array.new
+		who_won << won0
+		who_won << won1
+		who_won << won2
+
+		# Get number of wins
+		count_of_wins = 0
+		who_won.each do |game_result|
+			if game_result == 'true'
+				count_of_wins = count_of_wins + 1
+			end
+		end
+		
+		# Determine who won the level given the number of wins
+		if count_of_wins >=2
+			@who_won = "You won!"
+		else
+			@who_won = "You lost"
+		end
+
+
+		# Query to get locations
 		locations_query = Parse::Query.new("CoorList").tap do |q|
-		  	q.limit = 3
 		  	q.order_by = "Order"
   			q.order = :ascending
   			q.eq("Status", "live")
+  			q.value_in('objectId', played_location)
 		end.get
 
 		# Put location objects in an array to be called by view
