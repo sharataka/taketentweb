@@ -62,6 +62,7 @@ GEM
     parse-ruby-client (0.3.0)
       faraday
       faraday_middleware
+    pg (0.18.4)
     polyglot (0.3.5)
     rack (1.5.5)
     rack-test (0.6.3)
@@ -131,6 +132,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   parse-ruby-client
+  pg
   rails (= 4.1.1)
   rails_12factor
   sass-rails (~> 4.0.3)
