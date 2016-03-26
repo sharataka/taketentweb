@@ -1,3 +1,43 @@
+<script>
+	
+	$( document ).ready(function() {
+    	// Is user signed in?
+    	var signed_in = document.getElementById('signed_in').value;
+		
+
+		var retrievedObject = localStorage.getItem('localstorage_results');
+
+		if (retrievedObject == null) {}
+		else {
+			if (signed_in == 'true') {
+				array_of_results = JSON.parse(retrievedObject);
+				var arrayLength = array_of_results.length;
+
+				// Iterate through localStorage to save items
+		        for (var i = 0; i < arrayLength; i++) {
+		    		var url_string = "/result_page/location/"+array_of_results[i]['objectId']+"/distance/" + array_of_results[i]['distance'];   
+
+		            // Save result
+				    var xhttp = new XMLHttpRequest();
+				    xhttp.open("GET", url_string, true);
+				    xhttp.send();
+
+		        }
+
+				window.location.href = '/find_challenge_link?objectId0='+array_of_results[0]['objectId']
+			}
+
+
+		}
+
+	});
+
+	
+
+
+
+</script>
+
 <!-- Title tag -->
 <% content_for :title do %>
   Tap to guess - 
@@ -22,6 +62,8 @@
 
 <!-- Body -->
 <div class = "container">
+
+<input id = "signed_in" type="hidden" name="signed_in" value="<%= @signed_in %>">
 
 	<!-- Show well if not signed in 
 	<% if @signed_in == false %>

@@ -5,12 +5,18 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'locations#landing'
 
+    get 'chrome-guess/' => 'locations#chrome_guess'
+
+
   # Example of regular route:
     get 'map_page/location/:objectId' => 'locations#guess'
     get 'result_page/location/:objectId/distance/:distance/' => 'locations#result'
     get 'result_level/' => 'locations#result_level'
 
     get 'find-opponent/location/:objectId' => 'locations#find_opponent'
+
+    # Anon player signs in and needs to get redirected back to challenge page
+    get 'find_challenge_link' => 'locations#find_challenge_link'
     
     get 'location/:objectId' => 'locations#standalone'
     # Sign in

@@ -1,10 +1,43 @@
 class LocationsController < ApplicationController
 
-	before_action :require_login
+	before_action :require_login, except: [:chrome_guess]
+
+	def chrome_guess
+		puts 'test'
+	end
 
 	def find_opponent
 		@locationId = params[:objectId]
 		@current_location = Parse::Query.new("CoorList").eq("objectId", @locationId).get.first
+	end
+
+	def find_challenge_link		
+		# Get level number
+		level_number = Parse::Query.new("CoorList").eq("objectId", params[:objectId0]).get.first['Round']
+
+		# Query to get locations
+		locations_query = Parse::Query.new("CoorList").tap do |q|
+		  	q.order_by = "Order"
+  			q.order = :ascending
+  			q.eq("Status", "live")
+  			q.eq("Round", level_number)
+		end.get
+
+		# Put location objects in an array to be called by view
+		locations_array = Array.new
+		locations_query.each do |location|
+			individual_location = Hash.new
+			individual_location['Answer'] = location['Answer']
+			individual_location['imageLink'] = location['imageLink']
+			individual_location['objectId'] = location['objectId']
+
+			locations_array << individual_location
+		end
+
+		@locations = locations_array
+
+		render "result_level"
+
 	end
 
 	def standalone
